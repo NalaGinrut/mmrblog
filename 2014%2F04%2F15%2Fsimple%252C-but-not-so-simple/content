@@ -21,7 +21,7 @@ the first level of Guile intermediate language. After the tree-il was generated,
 Well, now we need to create a language first, we name it 'simple', here's the BNF:</p>
 <h4>The language:</h4>
 
-<pre class="sh_sh">
+<pre class="sh_guile">
 exp ::= exp op exp
       | number
 
@@ -32,7 +32,7 @@ op  ::= *
 </pre>
 <p>Very easy huh? Only the elementary arithmetic. The only difficulty is to handle the precedence, we can rewrite it to this:</p>
 
-<pre class="sh_sh">
+<pre class="sh_guile">
 exp ::= exp + term
       | exp - term
       | term
