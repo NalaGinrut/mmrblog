@@ -10,4 +10,4 @@ terms in the article, please read the Dragon Book[0] first.</i>
 <p>It's better to clarify something before we start. When I'm talking <font color='red'>'create a language'</font>, I mean designing
 the grammar of the language in certain form, usually, in <a href="https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_Form">BNF</a>.
 And when I say <font color='red'>'implement a language'</font>, it means writing lexer/parser, then transfer the source code to 
-an immediate form, like AST(Abstract Syntax Tree) or other IL(<a href="https://en.wikipedia.org/wiki/Intermediate_language">Intermediate Language</a>)
+an immediate form, like AST(Abstract Syntax Tree) or other IL(<a href="https://en.wikipedia.org/wiki/Intermediate_language">Intermediate Language</a>) for some optimizations. Finally we may have two choices:</p>
