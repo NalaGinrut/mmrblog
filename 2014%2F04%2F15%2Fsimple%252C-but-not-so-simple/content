@@ -232,7 +232,7 @@ Guile know it. This is the spec file. The syntax is very easy:</p>
 git clone https://github.com/NalaGinrut/simple.git
 </pre>
 <p>Please type <font color='red'>sudo make install</font>, and run Guile REPL (just run 'guile' in your command line).
-And run <font color='red'>,L simple</font> in your REPL, you should see:/p>
+And run <font color='red'>,L simple</font> in your REPL, you should see:</p>
 <pre class="sh_sh">
 GNU Guile 2.1.0.1771-48c2a
 Copyright (C) 1995-2014 Free Software Foundation, Inc.
