@@ -6,7 +6,7 @@ machenism of Guile.</p>
 <i>The contents may require some basic knowledge of compiler principle. If you're not so comfortable with the
 terms in the article, please read the Dragon Book[0] first.</i>  
 
-<h4>Some concepts</h4>
+<h3>Some concepts</h3>
 <p>It's better to clarify something before we start. When I'm talking <font color='red'>'create a language'</font>, I mean designing
 the grammar of the language in certain form, usually, in <a href="https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_Form">BNF</a>.
 And when I say <font color='red'>'implement a language'</font>, it means writing lexer/parser, then transfer the source code to 
