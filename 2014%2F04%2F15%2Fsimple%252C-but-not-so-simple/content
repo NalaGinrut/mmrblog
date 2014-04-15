@@ -142,3 +142,46 @@ then <font color='blue'>get</font> then <font color='blue'>return</font> the pro
 Each time calling this thunk, it returns a token. The parser will call it
 several times automatically, depends on the length of your source code.
 That's what LALR parser need to be fed.</p>
+
+<h4>The parser</h4>
+<p>Now it's the parser part:</p>
+<pre class="sh_guile">
+(define (make-parser)
+  (lalr-parser
+   (number (left: + -) (left: * /))
+   (program (exp) : $1
+            (*eoi*) : (call-with-input-string "" read)) ; *eof-object*
+   (exp  (exp + term) : `(+ ,$1 ,$3)
+         (exp - term) : `(- ,$1 ,$3)
+         (term) : $1)
+   (term (term * factor) : `(* ,$1 ,$3)
+         (term / factor) : `(/ ,$1 ,$3)
+         (factor) : $1)
+   (factor (number) : `(number ,$1))))
+</pre>
+<p>You may found that we just converted the BNF to a special simple AST, which is actually the
+list in Scheme, say:
+<pre class='sh_guile'>
+'(* (number 1) (number 3))
+</pre>
+<p>This is one of the perfect features of Scheme, because you can use this fundamental data type
+to indicate an AST. You don't have to write any new/complex data structure for that.
+That's why I emphasized that it is very cool to implement new languages with Scheme language.</p>
+<p>Then you may try this line in the REPL to test if the precedence is correct:</p>
+<pre class="sh_guile">
+(call-with-input-string "1+1*2/3-4" 
+  (lambda (port) 
+    ((make-parser) (make-simple-tokenize port) read-simple)))
+</pre>
+It should return:
+<pre class="sh_guile">
+(- (+ (number 1) 
+      (/ (* (number 1) (number 2))
+         (number 3)))
+   (number 4))
+</pre>
+Maybe you're not so comfortable with this form, it's actually the same with:
+<pre class="sh_c">
+(1 + ((1 * 2) / 3)) - 4
+</pre>
+<p>It's the correct precedence according to our BNF.</p>
