@@ -4,7 +4,7 @@ Say, PHP/Lua/Ecmascript...and all these front-end will take advantage of the com
 machenism of Guile.</p>
 <p>This article introduced a simple way to define a very simple programing language with <font color='blue'>50 lines</font> code, in Guile.</p>
 <i>The contents may require some basic knowledge of compiler principle. If you're not so comfortable with the
-terms in the article, please read the Dragon Book[0] first.</i>  
+terms in the article, please read the <a href="http://www.amazon.com/Compilers-Principles-Techniques-Tools-Edition/dp/0321486811">Dragon Book</a> first.</i>  
 
 <h3>Some concepts</h3>
 <p>It's better to clarify something before we start. When I'm talking <font color='red'>'create a language'</font>, I mean designing
@@ -267,7 +267,6 @@ If you're interested in this feature, please read Wingo's post[2].</p>
 
 <p><b>----------</b></p>
 <p><b>Refs</b></p>
-<p>[0] http://www.amazon.com/Compilers-Principles-Techniques-Tools-Edition/dp/0321486811</p>
 <p>[1] Tree-IL in Guile: https://www.gnu.org/software/guile/manual/html_node/Tree_002dIL.html</p>
 <p>[2] Andy Wingo introduced Ecmacript in Guile, and inter calling between Ecmascript and Scheme:
 http://wingolog.org/archives/2009/02/22/ecmascript-for-guile</p>
