@@ -87,3 +87,31 @@ In spite of this, your lexer must return the token struct to the parser, then le
 (define-syntax-rule (return port category value)
   (make-lexical-token category (port-source-location port) value))
 </pre>
+
+<h4>The lexer:</h4>
+<p>The lexer is a tool of lexical analysis, which aims to produce <a href="https://en.wikipedia.org/wiki/Token_(parser)#Token">tokens</a>.</p>
+<p>Let's see some code:</p>
+
+<p>These functions are useful to predicate different token for you.</p>
+<pre class="sh_guile">
+(define (is-whitespace? c) (char-set-contains? char-set:whitespace c))
+(define (is-number? c) (char-set-contains? char-set:hex-digit c))
+;; operators, in this simple case, we just have four operators
+(define (is-op? c) (string-contains "+-*/" (string c)))
+(define (is-delimiter? c) 
+  (or (eof-object? c) (string-contains " +-*/;\n" (string c))))
+</pre>
+
+<p>And these two functions are used to get the basic two types of token in our Simple language: numbers, and the operators.</p>
+<pre class="sh_guile">
+(define (get-number port)
+ (let lp((c (peek-char port)) (ret '()))
+   (cond
+    ((is-delimiter? c) ; encounter delimiter, finish to read a number
+     ;; convert to a number representation
+     (string->number (list->string (reverse ret))))
+    (else
+     (read-char port) ; next char
+     (lp (peek-char port) (cons c ret))))))
+(define (get-op port) (string->symbol (string (read-char port))))
+</pre>
