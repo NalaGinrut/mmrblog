@@ -2,7 +2,7 @@
 This means you can write new language on it, which could be totally different from Scheme.
 Say, PHP/Lua/Ecmascript...and all these front-end will take advantage of the compiling optimization
 machenism of Guile.</p>
-<p>This article introduced a simple way to define a very simple programing language in 50 lines, in Guile.</p>
+<p>This article introduced a simple way to define a very simple programing language in <font color='blue'>50 lines</font>, in Guile.</p>
 <i>The contents may require some basic knowledge of compiler principle. If you're not so comfortable with the
 terms in the article, please read the Dragon Book[0] first.</i>  
 
