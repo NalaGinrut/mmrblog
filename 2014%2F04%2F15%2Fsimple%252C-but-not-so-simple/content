@@ -257,3 +257,19 @@ simple@(guile-user)>
 3*4
 => 12
 </pre>
+
+<h4>Any further?</h4>
+<p>'simple' is just a simple language, maybe too simple for a serious compiler writer. Because even a front-end will
+take you a lot of time and hack power. No mention the backend. Fortunately, Guile provides a nice way to let language
+fans focus on the grammar rather than optimization. Nevertheless, all the languages front-end can call from each other,
+If you're interested in this feature, please read Wingo's post[2].</p>
+<p>I wrote an IMP[3] language before, besides, I'm rewriting guile-lua[4] now. I expect to share more in the future.</p>  
+
+<p><b>----------</b></p>
+<p><b>Refs</b></p>
+<p>[0] http://www.amazon.com/Compilers-Principles-Techniques-Tools-Edition/dp/0321486811</p>
+<p>[1] Tree-IL in Guile: https://www.gnu.org/software/guile/manual/html_node/Tree_002dIL.html</p>
+<p>[2] Andy Wingo introduced Ecmacript in Guile, and inter calling between Ecmascript and Scheme:
+http://wingolog.org/archives/2009/02/22/ecmascript-for-guile</p>
+<p>[3] https://github.com/NalaGinrut/imp </p>
+<p>[4] https://github.com/NalaGinrut/guile-lua-rebirth </p>
