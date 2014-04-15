@@ -1,6 +1,6 @@
 timestamp: 1397568412
-tags: guile,scheme,compiler,frontend,ecmascript,lua,language,parser,lexer,lalr,bnf,token
-status: publish
+tags: guile, scheme, compiler, frontend, ecmascript, lua, language, parser, lexer, lalr, bnf, token
+status: draft
 title: Simple, but not so simple
 name: simple,-but-not-so-simple
 comment_status: open
