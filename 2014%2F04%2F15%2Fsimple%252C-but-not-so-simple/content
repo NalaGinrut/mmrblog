@@ -225,3 +225,35 @@ Guile know it. This is the spec file. The syntax is very easy:</p>
   #:compilers   `((tree-il . ,compile-tree-il))
   #:printer     write)
 </pre>
+
+<h4>Run it!</h4>
+<p>You may type all the code yourself, it's better. But here is a git repo if you need any example:</p>
+<pre class="sh_sh">
+git clone https://github.com/NalaGinrut/simple.git
+</pre>
+<p>Please type <font color='red'>sudo make install</font>, and run Guile REPL (just run 'guile' in your command line).
+And run <font color='red'>,L simple</font> in your REPL, you should see:/p>
+<pre class="sh_sh">
+GNU Guile 2.1.0.1771-48c2a
+Copyright (C) 1995-2014 Free Software Foundation, Inc.
+
+Guile comes with ABSOLUTELY NO WARRANTY; for details type `,show w'.
+This program is free software, and you are welcome to redistribute it
+under certain conditions; type `,show c' for details.
+
+Enter `,help' for help.
+scheme@(guile-user)> ,L simple
+;;; note: auto-compilation is enabled, set GUILE_AUTO_COMPILE=0
+;;;       or pass the --no-auto-compile argument to disable.
+;;; compiling /usr/local/share/guile/2.2/language/simple/spec.scm
+;;; compiled /home/nalaginrut/.cache/guile/ccache/2.2-LE-8-3.4/usr/local/share/guile/2.2/language/simple/spec.scm.go
+Happy hacking with simple!  To switch back, type `,L scheme'.
+simple@(guile-user)> 
+</pre>
+<p>OK, now you see the language was changed to 'simple', and just play maths in it:</p>
+<pre class="sh_c">
+1+1
+=> 2
+3*4
+=> 12
+</pre>
