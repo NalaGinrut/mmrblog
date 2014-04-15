@@ -203,6 +203,4 @@ to transform our simple AST to Tree-IL [1]. You see, only few lines.</p>
 And make sure it's in language/simple directory, please make sure for it. Because Guile will pick
 the language front-end from language directory when you ask for loading the language.</p>
 
-<h4>Final step, the spec!</h4>
-<p>Although we've done all the coding work for our Simple language, we have to write one more file to let
-Guile know it. This is the spec file. The syntax is very easy:</p>
+
