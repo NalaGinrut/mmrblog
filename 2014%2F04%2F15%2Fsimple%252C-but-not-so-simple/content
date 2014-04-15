@@ -19,7 +19,7 @@ to another kind of AST, tree-il,
 the first level of Guile intermediate language. After the tree-il was generated, the rest of the compiling work would be taken by Guile.</p>
 <p>So we don't have to face the complicated compiling optimization stuffs. This feature makes Guile very easy to implement new languages.
 Well, now we need to create a language first, we name it 'simple', here's the BNF:</p>
-<h4>The language:</h4>
+<h3>The language:</h3>
 
 <pre class="sh_guile">
 exp ::= exp op exp
@@ -43,7 +43,7 @@ term ::= term * factor
 </pre>
 <p>This new BNF is clearer than the old one, and it promises the correct precedence.[0]</p>
 
-<h4>LALR parser generator:</h4>
+<h3>LALR parser generator:</h3>
 
 <p>Guile has intergrated LALR(1) parser generator in the core, but no lexer generator, so users have to write lexer manually.
 It's fine to me, since writing lexer is interesting. Then the key point to multi-lang is to know what does
@@ -88,7 +88,7 @@ In spite of this, your lexer must return the token struct to the parser, then le
   (make-lexical-token category (port-source-location port) value))
 </pre>
 
-<h4>The lexer:</h4>
+<h3>The lexer:</h3>
 <p>The lexer is a tool of lexical analysis, which aims to produce <a href="https://en.wikipedia.org/wiki/Token_(parser)#Token">tokens</a>.</p>
 <p>Let's see some code:</p>
 
@@ -144,7 +144,7 @@ Each time calling this thunk, it returns a token. The parser will call it
 several times automatically, depends on the length of your source code.
 That's what LALR parser need to be fed.</p>
 
-<h4>The parser</h4>
+<h3>The parser</h3>
 <p>Now it's the parser part:</p>
 <pre class="sh_guile">
 (define (make-parser)
@@ -187,7 +187,7 @@ Maybe you're not so comfortable with this form, it's actually the same with:
 </pre>
 <p>It's the correct precedence according to our BNF.</p>
 
-<h4>Tree IL</h4>
+<h3>Tree IL</h3>
 <p>These code defined a function named <font color='red'>compile-tree-il</font> which is used
 to transform our simple AST to Tree-IL [1]. You see, only few lines.</p>
 <pre class="sh_guile">
@@ -207,7 +207,7 @@ to transform our simple AST to Tree-IL [1]. You see, only few lines.</p>
 And make sure it's in language/simple directory, please make sure for it. Because Guile will pick
 the language front-end from language directory when you ask for loading the language.</p>
 
-<h4>Final step, the spec!</h4>
+<h3>Final step, the spec!</h3>
 <p>Although we've done all the coding work for our Simple language, we have to write one more file to let
 Guile know it. This is the spec file. The syntax is very easy:</p>
 <pre class="sh_guile">
@@ -226,7 +226,7 @@ Guile know it. This is the spec file. The syntax is very easy:</p>
   #:printer     write)
 </pre>
 
-<h4>Run it!</h4>
+<h3>Run it!</h3>
 <p>You may type all the code yourself, it's better. But here is a git repo if you need any example:</p>
 <pre class="sh_sh">
 git clone https://github.com/NalaGinrut/simple.git
@@ -258,12 +258,12 @@ simple@(guile-user)>
 => 12
 </pre>
 
-<h4>Any further?</h4>
+<h3>Any further?</h3>
 <p>'simple' is just a simple language, maybe too simple for a serious compiler writer. Because even a front-end will
 take you a lot of time and hack power. No mention the backend. Fortunately, Guile provides a nice way to let language
 fans focus on the grammar rather than optimization. Nevertheless, all the languages front-end can call from each other,
 If you're interested in this feature, please read Wingo's post[2].</p>
-<p>I wrote an IMP[3] language before, besides, I'm rewriting guile-lua[4] now. I expect to share more in the future.</p>  
+<p>I wrote an IMP[3] language before. I expect to share more in the future.</p>  
 
 <p><b>----------</b></p>
 <p><b>Refs</b></p>
@@ -272,4 +272,3 @@ If you're interested in this feature, please read Wingo's post[2].</p>
 <p>[2] Andy Wingo introduced Ecmacript in Guile, and inter calling between Ecmascript and Scheme:
 http://wingolog.org/archives/2009/02/22/ecmascript-for-guile</p>
 <p>[3] https://github.com/NalaGinrut/imp </p>
-<p>[4] https://github.com/NalaGinrut/guile-lua-rebirth </p>
