@@ -1,0 +1,59 @@
+<h3>1. Why bother to do it?</h3>
+<p>Well, I love Scheme. That's all.</p>
+<p>OK, seriously, Scheme is cool enough to hassle, especially after you've learned SICP.</p>
+<h3>2. Preparetion</h3>
+<h5>2.1 Which implementation?</h5>
+<p>I picked GNU Guile Scheme for the work. Because it appears in almost every GNU/Linux distro.</p>
+<p>But you may need to install Guile2 rather than Guile-1.8:</p>
+<pre class="sh_sh">
+sudo apt-get install guile-2.0
+</pre>
+<h5>2.2 How about the blog engine?</h5>
+<pre>
+- Hey! I'll shut this page if you tell me to output HTML with bunch of `display' calling!
+- Don't worry, we're not going that way.
+</pre>
+<p>Here's a nice blog engine provided by <a href="wingolog.org">Andy Wingo</a>, <a href="http://wingolog.org/software/tekuti/">Tekuti</a> is its name. Tekuti is a Git based blog engine, so there's no more SQL-injection risk. All the data are handled by Git on the server side.</p>
+<p>I know many folks like to build their blog on github nowadays. All you need is a static-page-generator, I could write another tutorial for this on Scheme too! But you don't have to use github if you've already had a VPS, right?</p>
+<p>Anyway, this blog is built with Tekuti.</p>
+<p>I suggest you try my fork of Tekuti, it's easier to use:</p>
+<pre class="sh_sh">
+git clone http://github.com/NalaGinrut/nala-tekuti.git
+</pre>
+<p>And compile then install it:</p>
+<pre class="sh_sh">
+./configure &amp;&amp; make &amp;&amp; sudo make install
+</pre>
+<h3>3. Configuration</h3>
+<h5>3.1 Tekuti config</h5>
+<p>You have to modify your own config file.</p>
+<pre class="sh_sh">
+cd nala-tekuti/tekuti
+cp config.template config.scm
+emacs config.scm
+</pre>
+<p>There're several items in config.scm, but the most significant is `*admin-user*' and `*admin-pass*'. Change them to your prefered admin name and passwd. And you may modify others as you wish.</p>
+<h5>3.2 Nginx config</h5>
+<p>Although Tekuti can run independently with its own inner-server, it's better to take advantage of reverse-proxy in Nginx, rather than disposing 8080 port to internet.</p>
+<p>You may add these line to your /etc/nginx/nginx.conf:</p>
+<pre class="sh_sh">
+     location /blog {
+             proxy_pass http://127.0.0.1:8080;
+             proxy_set_header Host $host;
+             proxy_set_header X-Real-IP $remote_addr;
+             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+     }
+</pre>
+<p>Then restart you Nginx:</p>
+<pre class="sh_sh">
+sudo service nginx restart
+</pre>
+
+<h3>4. Run your blog</h3>
+<p>Now you can start you blog engine:</p>
+<pre class="sh_sh">
+sudo service tekuti start
+</pre>
+<p>Then visit the site http://your_domain_name/blog if you're lucky enough ;-)</p>
+
+<p>Happy hacking!</p>
