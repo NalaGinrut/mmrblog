@@ -185,3 +185,39 @@ Maybe you're not so comfortable with this form, it's actually the same with:
 (1 + ((1 * 2) / 3)) - 4
 </pre>
 <p>It's the correct precedence according to our BNF.</p>
+
+<h4>Tree IL</h4>
+<p>These code defined a function named <font color='red'>compile-tree-il</font> which is used
+to transform our simple AST to Tree-IL [1]. You see, only few lines.</p>
+<pre class="sh_guile">
+(define (compile-tree-il exp env opts)
+  (values (parse-tree-il (comp exp '())) env env))
+(define (comp src e)
+  (match src
+    (('number x) `(const ,x))
+    ;; If you're using master branch of Guile, please use `call' to replace `apply'.
+    ;; If you are using stable-2.0 or Guile-2.0.x, `apply' should be fine [1].
+    ((op x y) `(apply (primitive ,op) ,(comp x e) ,(comp y e)))))
+</pre>
+<p>You may put all the code showed above into one file, say, <font color='red'>simple.scm</font>. 
+And make sure it's in language/simple directory, please make sure for it. Because Guile will pick
+the language front-end from language directory when you ask for loading the language.</p>
+
+<h4>Final step, the spec!</h4>
+<p>Although we've done all the coding work for our Simple language, we have to write one more file to let
+Guile know it. This is the spec file. The syntax is very easy:</p>
+<pre class="sh_guile">
+(define-module (language simple spec)
+  #:use-module (system base language)
+  #:use-module (language simple simple)
+  #:export (simple))
+
+;; The definition of Simple language
+;; You don't have to understand it, just copy and modify it from other front-end
+(define-language simple
+  #:title       "simple"
+  #:reader      (lambda (port env) 
+                  ((make-parser) (make-simple-tokenizer port) error))
+  #:compilers   `((tree-il . ,compile-tree-il))
+  #:printer     write)
+</pre>
