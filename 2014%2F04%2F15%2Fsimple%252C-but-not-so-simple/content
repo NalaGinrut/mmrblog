@@ -115,3 +115,30 @@ In spite of this, your lexer must return the token struct to the parser, then le
      (lp (peek-char port) (cons c ret))))))
 (define (get-op port) (string->symbol (string (read-char port))))
 </pre>
+
+<p>The key function is <font color='red'>next-token</font> which is used to <font color='blue'>check</font>
+then <font color='blue'>get</font> then <font color='blue'>return</font> the proper token to the parser.</p>
+<pre class="sh_guile">
+(define (next-token port)
+  (let ((c (peek-char port)))
+    (cond
+     ((or (eof-object? c) (char=? c #\nl)) ; end of line, or end src
+      '*eoi*) ; return '*eoi* because LALR module need it
+     ((is-whitespace? c)
+      (read-char port)
+      (next-token port)) ; skip white space
+     ((is-number? c)
+      (return port 'number (get-number port)))
+     ((is-op? c)
+      (return port (get-op port) #f))
+     (else
+      (read-char port)
+      (next-token port)))))
+
+<p>This tokenizer is important because the parser need it be passed in.</p> 
+(define (make-simple-tokenizer port) (lambda () (next-token port)))
+</pre>
+<p>The tokenizer must return a thunk (stands for a function without any args)
+Each time calling this thunk, it returns a token. The parser will call it
+several times automatically, depends on the length of your source code.
+That's what LALR parser need to be fed.</p>
