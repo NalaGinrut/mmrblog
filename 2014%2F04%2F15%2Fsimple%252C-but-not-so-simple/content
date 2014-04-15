@@ -19,3 +19,26 @@ to another kind of AST, tree-il,
 the first level of Guile intermediate language. After the tree-il was generated, the rest of the compiling work would be taken by Guile.</p>
 <p>So we don't have to face the complicated compiling optimization stuffs. This feature makes Guile very easy to implement new languages.
 Well, now we need to create a language first, we name it 'simple', here's the BNF:</p>
+<h4>The language:</h4>
+
+<pre class="sh_sh">
+exp ::= exp op exp
+      | number
+
+op  ::= * 
+      | /  ;; `multi' and `div' has higher precedence than `plus' and `minus'
+      | +
+      | -
+</pre>
+<p>Very easy huh? Only the elementary arithmetic. The only difficulty is to handle the precedence, we can rewrite it to this:</p>
+
+<pre class="sh_sh">
+exp ::= exp + term
+      | exp - term
+      | term
+
+term ::= term * factor
+       | term / factor
+       | factor
+</pre>
+<p>This new BNF is clearer than the old one, and it promises the correct precedence.[0]</p>
