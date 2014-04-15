@@ -1,0 +1,93 @@
+<p>Take it easy if you're uncomfortable with the word 'elegant'.
+This article is not driven by any academic purpose.
+I'm trying to show an interesting way to write chaos Scheme code. ;-)</p>
+<p>IMO, learning a language in a chaos way is fascinating.</p> 
+<p>Before your advanture, please make sure your Scheme interpreter support R7Rs.</p>
+<p>For example, the latest Racket(5.3+) or GNU Guile(2.0.10+).</p>
+<p>If you picked GNU Guile, please enable R7Rs symbols feature:</p>
+<pre class="sh_guile">
+;; run this line in your Guile REPL:
+(read-enable  'r7rs-symbols)
+</pre>
+<p>OK</p>
+<p>Now here is the code:</p>
+<pre class="sh_guile">
+;; Try this code:
+(apply + `(,((lambda (|2+3|) #(1)2+3) #e2e3) 
+           ,(* 120 .((*(/(+(/(* #e144#) 84)))))) 
+           ,(*(/(+ #e5/7)) 5)))
+</pre>
+<p>See, if you copy this code or type it correctly, what it should be showed?</p>
+<p>Surprise hum?</p>
+<p>Now let me explain the code if you can't figure it out clearly.</p>
+<p>We can split this chaos code to several parts. The first part is:</p>
+<pre class="sh_guile">
+((lambda (|2+3|) #(1)2+3) ; *exp1*
+ #e2e3)                   ; *exp2*
+</pre>
+<p>As you may know the symbol in the parens after <font color="blue">lambda</font> depicts the
+parameter(as formal parameter) name. So <font color="blue">|2+3|</font> means a parameter named "2+3".
+Note that "2+3" here won't be evaluated to 5, but stored as a symbol for parameter name.
+This is a new syntax in <a href="http://trac.sacrideo.us/wg/raw-attachment/wiki/WikiStart/r7rs.pdf">R7Rs</a>,
+an identifier can be represented by a sequence of zero or more characters enclosed within vertical
+lines (|), analogous to string literals.</p>
+<p><font color='red'>#(1)</font> means a vector contained one element: integer 1.
+It's reasonable to consider it as C array, because of the randomly accessing:</p>
+<pre class="sh_c">
+int arr[1] = {1};
+</pre>
+<p>The right side paren ')' is delimiter in Scheme, so <font color='green'>*exp1*</font> can be rewritten as:</p>
+<pre class="sh_guile">
+(lambda (x) ; imagine x is replaced by a variable named "2+3"
+ #(1)
+ x) ; return x 
+</pre>
+<p>Now it's easy to understand that it's a 
+<a href="http://en.wikipedia.org/wiki/Anonymous_function">anonymous function</a>
+which always return the parameter passed in.
+The vector <font color='red'>#(1)</font> would be ignored in the context.</p>
+<p>Let's consider <font color='green'>*exp2*</font>. 
+The first question is <b>"In what order should this code be read?"</b></p>
+<p>Is it <font color='red'>e2e3</font> after a hashtag? <b>No</b>.</p>
+<p>Actually, it's <font color='red'>#e</font> followed by <font color='red'>2e3</font></p>
+<p><font color='red'>2e3</font> means $2.0\times 10^3 = 2000.0$.
+</p>
+<p><font color='red'>#e</font> means <b>"produce an exact number"</b>. 
+So the code <font color='green'>*exp2*</font> can be replaced as:</p>
+<pre class="sh_guile">
+(* 2 (expt 10 3))
+;; NOTE:
+;; #e means "produce an exact number" NOT "convert it to exact number"
+;; The difference is that the cast can't promise the exactness
+</pre>
+<pre class="sh_guile">
+((lambda (|2+3|) #(1)2+3) #e2e3)
+</pre>
+<p>Let's move to the second part:</p>
+<pre class="sh_guile">
+(* 120 .((*(/(+(/(* #e144#) 84))))))
+</pre>
+<p>Well, now you've already known the meaning of <font color='red'>#e</font> here, right?</p>
+<p>And <font color='red'>144#</font> seems an ambiguous mystery syntax. Actually, it's guaranteed
+in <font color='blue'>string->number</font> of
+<a href="http://www.schemers.org/Documents/Standards/R5RS/HTML/r5rs-Z-H-9.html#%_sec_6.2.6">R5Rs</a>[0].
+You may consider it as $ddd\# = produce\_exact\_num(ddd \times 10)$ [1].</p>
+<pre class="sh_guile">
+(string->number "144#")
+;; ==> 1440.0
+144#
+;; ==> 1440.0
+#e144#
+;; ==> 1440
+;; #e means "produce an exact number"
+</pre>
+<p>The REPL calls <font color='blue'>read</font> procedure to read&amp;parse "144#", then it will call
+<font color='blue'>string->number</font> to convert it to an inexact number <b>1440.0</b>.</p>
+<p>With all hints so far, the rest code is easy to analyze, it's your turn if you're still here. ;-)</p>
+<p>Happy hacking!</p>
+
+<p>-------------</p>
+<p> <b>NOTE:</b></p>
+<p>[0] Actually there's an explicit removing of this feature in R6Rs and R7Rs: <font color='red'># can no longer be used in place of digits in number representations</font>.</p>
+<p>[1] Racket/Chicken/Guile has this feature. Some Scheme implementation don't guarantee it. Scheme48
+doesn't replace # as 0, but 5. Its code intend doing so, but I've no idea why.</p>
