@@ -201,4 +201,6 @@ to transform our simple AST to Tree-IL [1]. You see, only few lines.</p>
 </pre>
 
 
-
+<p>You may put all the code showed above into one file, say, <font color='red'>simple.scm</font>. 
+And make sure it's in language/simple directory, please make sure for it. Because Guile will pick
+the language front-end from language directory when you ask for loading the language.</p>
