@@ -63,3 +63,27 @@ A token is either a symbol, or a record created by the function make-lexical-tok
 and a semantic value associated with the token. For example, a string token would have a category set to
 'STRING while its semantic value is set to the string value "hello".
 The field accessors are:</p>
+
+<pre class="sh_guile">
+lexical-token-category
+lexical-token-source
+lexical-token-value
+</pre>
+<p>Once the end of file encountered, the lexical analyzer must always return the symbol <font color='green'>'*eoi*</font>.
+In spite of this, your lexer must return the token struct to the parser, then let the parser do its work.</p>
+
+<p>Before we start our 50-lines tour, we need some preparation, the code below is to load LALR module, and define two helper functions.</p>
+<pre class="sh_guile">
+;; Be sure you imported LALR module:
+(use-modules (system base lalr))
+
+;; Two helper macros to create the token struct for returning
+(define-syntax-rule (port-source-location port)
+  (make-source-location (port-filename port)
+                        (port-line port)
+                        (port-column port)
+                        (false-if-exception (ftell port))
+                        #f))
+(define-syntax-rule (return port category value)
+  (make-lexical-token category (port-source-location port) value))
+</pre>
