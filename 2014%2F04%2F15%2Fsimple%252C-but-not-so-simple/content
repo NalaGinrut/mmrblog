@@ -134,8 +134,9 @@ then <font color='blue'>get</font> then <font color='blue'>return</font> the pro
      (else
       (read-char port)
       (next-token port)))))
-
+</pre>
 <p>This tokenizer is important because the parser need it be passed in.</p> 
+<pre class="sh_guile">
 (define (make-simple-tokenizer port) (lambda () (next-token port)))
 </pre>
 <p>The tokenizer must return a thunk (stands for a function without any args)
