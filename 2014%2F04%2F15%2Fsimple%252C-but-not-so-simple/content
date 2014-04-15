@@ -16,6 +16,6 @@ an immediate form, like AST(Abstract Syntax Tree) or other IL(<a href="https://e
 you're writing a VM one; or native code for AOT compiler.</p>
 <p>This article is about the front-end only: lexer and parser, and transforming a simple AST (actually it's list type in Scheme)
 to another kind of AST, tree-il,
-the first level of Guile intermediate language. After the tree-il was generated, the rest of the compiling work would be taken by Guile.<p>
+the first level of Guile intermediate language. After the tree-il was generated, the rest of the compiling work would be taken by Guile.</p>
 <p>So we don't have to face the complicated compiling optimization stuffs. This feature makes Guile very easy to implement new languages.
 Well, now we need to create a language first, we name it 'simple', here's the BNF:</p>
