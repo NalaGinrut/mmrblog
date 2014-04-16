@@ -41,7 +41,7 @@ term ::= term * factor
        | term / factor
        | factor
 </pre>
-<p>This new BNF is clearer than the old one, and it promises the correct precedence.[0]</p>
+<p>This new BNF is clearer than the old one, and it promises the correct precedence.</p>
 
 <h3>LALR parser generator:</h3>
 
