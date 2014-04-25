@@ -26,7 +26,7 @@ def result_show(result):
 
 result_show(word_picker(num_filter(get_number)))
 </pre>
-<p>The process is very simple, get a number, and check if it's even or odd, finally print out the result.</p>
+<p>The process is very simple, get a number, and check if it's even or odd, finally it print out the result.</p>
 <p>But this code has a problem, each time you want to add a level in your cascaded functions chain, you have to modify the code.
 The worst case is when you have more than 10 levels in your functions calling chain, you can't write it as a chain. You have to
 split them like this:</p>
