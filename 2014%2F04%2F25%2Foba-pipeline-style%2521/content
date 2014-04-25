@@ -1,6 +1,6 @@
 <p>The concept of pipeline in functional programming means 
-<font color='red'>a succession of functions that operate, one after another, on a big chunk of data</font>[1],
-which consists of a chain of processing elements arranged so that the output of each element is the input of the next[2].
+a succession of functions that operate, one after another, on an array of data,
+which consists of a chain of processing elements arranged so that the output of each element is the input of the next.
 One of the famous practices is <a href='https://en.wikipedia.org/wiki/Pipeline_(Unix)'>Unix pipeline</a>. </p>
 
 <p> This article is about pipeline-like programming pattern, rather than 'yet another tutorial of pipeline tools'.</p>
