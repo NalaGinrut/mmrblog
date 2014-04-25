@@ -1,0 +1,91 @@
+<p>The concept of pipeline in functional programming means 
+<font color='red'>a succession of functions that operate, one after another, on a big chunk of data</font>[1],
+which consists of a chain of processing elements arranged so that the output of each element is the input of the next[2].
+One of the famous practices is <a href='https://en.wikipedia.org/wiki/Pipeline_(Unix)'>Unix pipeline</a>. </p>
+
+<p> This article is about pipeline-like programming pattern, rather than 'yet another tutorial of pipeline tools'.</p>
+
+<p> Let's see some code: </p>
+
+<h3>In Python</h3>
+<p>Here's a silly code as an example.</p>
+<pre class="sh_python">
+def get_number():
+    return input("Give me a number: ")
+
+def num_filter(num):
+    print "oh you input %d!" % num
+    return num % 2
+
+def word_picker(hit):
+    print "checking..."
+    return ('even', 'odd')[hit]
+
+def result_show(result):
+    print "It is an %s number." % result
+
+result_show(word_picker(num_filter(get_number)))
+</pre>
+<p>The process is very simple, get a number, and check if it's even or odd, finally print out the result.</p>
+<p>But this code has a problem, each time you want to add a level in your cascaded functions chain, you have to modify the code.
+The worst case is when you have more than 10 levels in your functions calling chain, you can't write it as a chain. You have to
+split them like this:</p>
+<pre class="sh_python">
+num = get_number()
+hit = num_filter(num)
+result = word_picker(n)
+result_show(result)
+</pre>
+<p>This could be clearer, and it's easy to add a 'add_one' step after 'get_number', which plus 1 to
+the number you just typed. But you've added a lot of code and several temprorary variables.
+Let's hope your compiler can eliminate all the redundant part for you during the optimization.</p>
+<p>Anyway, it's better not to modify the original code when you want to add new code.</p>
+<p>Now here is the pipeline one:</p>
+<pre class="sh_python">
+def make_pipeline(procs):
+    return lambda x: reduce(lambda y,p:p(y), procs, x)
+
+procs = [num_filter, word_picker, result_show]
+f = make_pipeline(procs)
+f(get_number())
+
+def add_one(x):
+    return 1+x
+
+f2 = make_pipeline(procs.insert(0, add_one))
+f2(get_number())
+</pre>
+
+<h3>In Scheme</h3>
+<p>Although many pythoners enjoy <font color='blue'>lambda</font> and <font color='blue'>reduce</font>, not all the people
+have realized that these stuffs are borrowed from Lisp/Scheme land. There're cooler things in Scheme, maybe we should drop
+<font color='blue'>reduce</font> and give others a try, say, <font color='blue'>fold</font>:</p>
+<pre class="sh_guile">
+(use-modules (srfi srfi-1)) ; `fold' dwells srfi-1
+
+(define (get-number)
+  (display "Give me a number: ")
+  (read))
+
+(define (num-filter num)
+  (format #t "oh you input ~d!~%" num)
+  ;; ~d is similar to %d in Python, and ~% means newline
+  (modulo num 2))
+
+(define (word-picker hit)
+  (display "checking...\n")
+  (list-ref '("even" "odd") hit)) ; list accessing in Scheme
+
+(define (result-show result)
+  (format #t "It is an ~a number.~%" result))
+  ;; ~a is similar to %r in Python
+
+(define (make-pipeline . procs)
+  (lambda (x) (fold (lambda (y p) (y p)) x procs)))
+
+(define f (make-pipeline num-filter word-picker result-show))
+
+(f (get-number))
+</pre>
+
+<p>See, there's no much difference from Python code. And you may read the manual of <a href="http://www.gnu.org/software/guile/docs/docs-2.0/guile-ref/SRFI_002d1-Fold-and-Map.html#SRFI_002d1-Fold-and-Map">fold</a> here.</p>
