@@ -89,3 +89,4 @@ have realized that these stuffs are borrowed from Lisp/Scheme land. There're coo
 </pre>
 
 <p>See, there's no much difference from Python code. And you may read the manual of <a href="http://www.gnu.org/software/guile/docs/docs-2.0/guile-ref/SRFI_002d1-Fold-and-Map.html#SRFI_002d1-Fold-and-Map">fold</a> here.</p>
+<p>After all, the content of this article is nothing but introduced a way to implement <a href="https://www.gnu.org/software/guile/manual/html_node/Higher_002dOrder-Functions.html">compose</p>, which is very useful and interesting in programming. Now you already know what it is and how it can be, maybe it's time to hack more code, huh?</p>
