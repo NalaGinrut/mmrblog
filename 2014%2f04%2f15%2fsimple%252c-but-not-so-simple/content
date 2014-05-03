@@ -189,7 +189,7 @@ Maybe you're not so comfortable with this form, it's actually the same with:
 
 <h3>Tree IL</h3>
 <p>These code defined a function named <font color='red'>compile-tree-il</font> which is used
-to transform our simple AST to Tree-IL [1]. You see, only few lines.</p>
+to transform our parse tree to sort of AST, say, Tree-IL [1]. You see, only few lines.</p>
 <pre class="sh_guile">
 (define (compile-tree-il exp env opts)
   (values (parse-tree-il (comp exp '())) env env))
