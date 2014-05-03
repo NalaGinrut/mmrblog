@@ -160,7 +160,7 @@ That's what LALR parser need to be fed.</p>
          (factor) : $1)
    (factor (number) : `(number ,$1))))
 </pre>
-<p>You may found that we just converted the BNF to a parser tree, which is actually the
+<p>You may found that we just converted the BNF to a parse tree, which is actually the
 list in Scheme, say:</p>
 <pre class='sh_guile'>
 '(* (number 1) (number 3))
