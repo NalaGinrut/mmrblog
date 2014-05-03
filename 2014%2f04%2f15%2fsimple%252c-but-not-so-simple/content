@@ -166,7 +166,7 @@ list in Scheme, say:</p>
 '(* (number 1) (number 3))
 </pre>
 <p>This is one of the perfect features of Scheme, because you can use this fundamental data type
-to indicate an tree. You don't have to write any new/complex data structure for that.
+to indicate a tree. You don't have to write any new/complex data structure for that.
 That's why I emphasized that it is very cool to implement new languages with Scheme language.</p>
 <p>Then you may try this line in the REPL to test if the precedence is correct:</p>
 <pre class="sh_guile">
