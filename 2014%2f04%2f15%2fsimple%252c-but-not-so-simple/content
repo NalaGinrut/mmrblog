@@ -149,7 +149,10 @@ That's what LALR parser need to be fed.</p>
 <pre class="sh_guile">
 (define (make-parser)
   (lalr-parser
-   (number (left: + -) (left: * /))
+   ;;(number (left: + -) (left: * /))
+   ;; Since we handled precedence manually in BNF, so we
+   ;; don't need to specify it in lalr-parser.
+   (number + - * /)
    (program (exp) : $1
             (*eoi*) : (call-with-input-string "" read)) ; *eof-object*
    (exp  (exp + term) : `(+ ,$1 ,$3)
