@@ -21,7 +21,7 @@ function</a>.</p>
 the result would be the input of next round, *BUT* we need to pass two arguments to the kernel function.
 This is similar to
 <a href="http://nalaginrut.com/archives/2014/04/25/oba-pipeline-style%21">pipeline pattern</a>, but different.
-Because pipeline pattern pass one argument only amount rounds.</p>
+Because pipeline pattern pass only one argument amount rounds.</p>
 
 <p>To make this clearer, let's try an simple example.</p>
 
