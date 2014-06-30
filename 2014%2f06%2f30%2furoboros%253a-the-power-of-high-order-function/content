@@ -1,0 +1,123 @@
+<p>According to <a href="http://mitpress.mit.edu/sicp/full-text/book/book.html">SICP</a>,
+<a href="http://en.wikipedia.org/wiki/Higher-order_function">high-order function</a>
+gives us the ability to build abstractions by assigning names to common
+patterns and then to work in terms of the abstractions directly. It's very useful while you're trying
+to refactor you code.</p>
+
+<p>There're several built-in classical high-order functions in most modern languages,
+like <font color='blue'>map</font>, <font color='blue'>reduce</font>, <font color='blue'>filter</font>,
+<font color='blue'>accumulator</font>...
+Frequently, we use them for solving most problems.</p>
+
+<p>But it doesn't mean you can't find or invent new one. Actually, you may be inspired during programming
+and find a new pattern which could be abstracted to use high-order functions.</p>
+
+<p>This article introduced a new high-order function for certain cases. I wrote it in Scheme, but you can
+rewrite it in any languages supported <a href="http://en.wikipedia.org/wiki/First-class_function">first-class
+function</a>.</p>
+
+<h3>Uroboros</h3>
+<p>It's easy to find such a pattern in some cases: the input data needs to be handled repeatedly, each round
+the result would be the input of next round, *BUT* we need to pass two arguments to the kernel function.
+This is similar to
+<a href="http://nalaginrut.com/archives/2014/04/25/oba-pipeline-style%21">pipeline pattern</a>, but different.
+Because pipeline pattern pass one argument only amount rounds.</p>
+
+<p>To make this clearer, let's try an simple example.</p>
+
+<p>Considering a GCD(<a href="http://en.wikipedia.org/wiki/Greatest_common_divisor">Great Common Divisor</a>)
+function:</p>
+
+<pre class="sh_guile">
+(define (my-gcd x y)
+  (if (zero? y)
+      x
+      (my-gcd y (modulo x y))))
+</pre>
+
+<p>You may found a rule that my-gcd was called repeatedly, and each time the arguments are related to the last round.
+Actually, the kernel function my-gcd generates the input arguments for next round. This situation appears in most
+tail-call procedures.</p>
+
+<p>So let me introduce a new pattern named <font color='blue'>urob</font> stands for
+<a href="http://en.wikipedia.org/wiki/Ouroboros">Uroboros</a>. It's a snake eating itself.
+<font color='red'>I can't say this metaphor is very proper, but I hope it can active your imagination</font>.</p>
+
+<pre class="sh_guile">
+(define (urob func init val pred)
+ (if (pred val)
+     init
+     (call-with-values (lambda () (func init val))
+       (lambda (x y) (urob func x y pred)))))
+</pre>
+
+<p>Very simple huh?</p>
+
+<p>The <font color='blue'>pred</font>would predicate if the recursive calling should be end.
+And <font color='blue'>func</font> is the kernel function. Let's try it for GCD:</p>
+
+<pre class="sh_guile">
+(define (my-gcd2 x y)
+ (urob (lambda (a b) (values b (modulo a b)))
+       x y zero?))
+</pre>
+
+<I>"But why we drop the previous simple and elegant GCD implementation for this?"</I>
+<p>Someone may shout.</p>
+
+<p>Because sometimes we may encounter more complex case:</p>
+
+<h3>A delimiter lexer</h3>
+<p>A delimiter lexer is easy to understand. You specifiy a delimiters list, and the lexer will
+tokenize the input string:</p>
+
+<pre class="sh_guile">
+;; (lexer str delimiters)
+(lexer "hello.x+(bye)"  ".+()")
+;; ==> ("hello" "." "x" "+" "(" "bye" ")")
+</pre>
+
+<p>It's not hard to implement such a lexer with loop:</p>
+
+<pre class="sh_guile">
+(define (lexer str delimiters)
+ (define cs (->char-set delimiters))
+ (define-syntax-rule (-> w r)
+  (if (null? w)
+      r
+      (cons (list->string (reverse! w)) r)))
+ (let lp((lst (string->list str)) (ret '()) (word '()))
+  (cond
+   ((null? lst) (reverse! ret))
+   (else
+    (if (char-set-contains? cs (car lst))
+        (lp (cdr lst) (cons (string (car lst)) (-> word ret)) '())
+        (lp (cdr lst) ret (cons (car lst) word)))))))
+</pre>
+
+<p>But I'm going to show you a uroboros version:</p>
+
+<pre class="sh_guile">
+(use-modules (ice-9 rdelim) (rnrs))
+
+(define (lexer str delimiters)
+ (define (-> c) (if (eof-object? c) '() (list (string c))))
+ (define (tokenizer lst str)
+  (call-with-input-string str
+   (lambda (port)
+    (let* ((token (read-delimited delimiters port 'peek))
+           (delim (-> (read-char port)))  
+           (rest (get-string-all port)))
+         (values (if (string-null? token) `(,@lst ,@delim) `(,@lst ,token ,@delim))
+                 rest)))))
+  (urob tokenizer '() str string-null?))
+</pre>
+
+<h3>So what?</h3>
+
+<p>Choosing a proper high-order function could help you to break you code into more maintainable independent
+functions, and resue the code largly. Although understand the classical high-order functions is important in
+functional programming, you can even invent your own during the practicing.</p>
+
+<p>I always thought, if design pattern is so significant for OOP, maybe high-order function has equal status
+in FP. Who knows...</p>
