@@ -53,7 +53,7 @@ tail-call procedures.</p>
 
 <p>Very simple huh?</p>
 
-<p>The <font color='blue'>pred</font>would predicate if the recursive calling should be end.
+<p>The <font color='blue'>pred</font> would predicate if the recursive calling should be end.
 And <font color='blue'>func</font> is the kernel function. Let's try it for GCD:</p>
 
 <pre class="sh_guile">
