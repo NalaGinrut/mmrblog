@@ -116,7 +116,7 @@ tokenize the input string:</p>
 <h3>So what?</h3>
 
 <p>Choosing a proper high-order function could help you to break you code into more maintainable independent
-functions, and reuse the code largely. Although understand the classical high-order functions is important in
+functions, and reuse the code largely. Although understanding the classical high-order functions is important in
 functional programming, you can even invent your own during the practicing.</p>
 
 <p>I always thought, if design pattern is so significant for OOP, maybe high-order function has equal status
