@@ -23,7 +23,7 @@ This is similar to
 <a href="http://nalaginrut.com/archives/2014/04/25/oba-pipeline-style%21">pipeline pattern</a>, but different.
 Because pipeline pattern pass only one argument amount rounds.</p>
 
-<p>To make this clearer, let's try an simple example.</p>
+<p>To make this clearer, let's try a simple example.</p>
 
 <p>Considering a GCD(<a href="http://en.wikipedia.org/wiki/Greatest_common_divisor">Great Common Divisor</a>)
 function:</p>
