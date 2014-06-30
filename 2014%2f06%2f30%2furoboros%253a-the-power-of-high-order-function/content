@@ -65,7 +65,7 @@ And <font color='blue'>func</font> is the kernel function. Let's try it for GCD:
 <I>"But why we drop the previous simple and elegant GCD implementation for this?"</I>
 <p>Someone may shout.</p>
 
-<p>Because sometimes we may encounter more complex case:</p>
+<p>I'll explain it in the end. Now let's try more complex case:</p>
 
 <h3>A delimiter lexer</h3>
 <p>A delimiter lexer is easy to understand. You specifiy a delimiters list, and the lexer will
@@ -116,7 +116,7 @@ tokenize the input string:</p>
 <h3>So what?</h3>
 
 <p>Choosing a proper high-order function could help you to break you code into more maintainable independent
-functions, and resue the code largly. Although understand the classical high-order functions is important in
+functions, and reuse the code largely. Although understand the classical high-order functions is important in
 functional programming, you can even invent your own during the practicing.</p>
 
 <p>I always thought, if design pattern is so significant for OOP, maybe high-order function has equal status
