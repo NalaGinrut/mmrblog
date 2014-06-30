@@ -1,5 +1,5 @@
-timestamp: 1404114244
-tags: fp, programming, scheme, guile, design pattern, high order functions
+timestamp: 1404114289
+tags: fp, programming, scheme, guile, design pattern, high order functions,gcd,refactoring,SICP
 status: draft
 title: Uroboros: The power of high order function
 name: uroboros:-the-power-of-high-order-function
