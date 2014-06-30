@@ -120,4 +120,5 @@ functions, and resue the code largly. Although understand the classical high-ord
 functional programming, you can even invent your own during the practicing.</p>
 
 <p>I always thought, if design pattern is so significant for OOP, maybe high-order function has equal status
-in FP. Who knows...</p>
+in FP.</p>
+<p>Who knows...</p>
