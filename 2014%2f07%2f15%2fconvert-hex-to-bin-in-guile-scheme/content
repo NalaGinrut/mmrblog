@@ -24,6 +24,15 @@ worst point of Scheme. And one may enjoy wasting such time...hey I'm sorry Boss.
 
 (define (hex->ascii str)
   (%numstr->bin str (lambda (x) (utf8->string (u8-list->bytevector x))) 16))
+
+;; (hex->bin "4a4b4c")
+;; => #vu8(74 75 76)
+
+;; (hex->list "4a4b4c")
+;; => (74 75 76)
+
+;; (hex->ascii "4a4b4c")
+;; => "JKL"
 </pre>
 
 <p>In the beginning, I just need <font color='blue'>hex->bin</font>, but finally, I wrote a high order function for a tiny hex lib.</p>
