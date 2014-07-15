@@ -1,6 +1,6 @@
-timestamp: 1405418833
+timestamp: 1405419097
 tags: scheme, guile, hex2bin, h2bin, high order function
-status: draft
+status: publish
 title: Convert hex to bin in Guile Scheme
 name: convert-hex-to-bin-in-guile-scheme
 comment_status: open
