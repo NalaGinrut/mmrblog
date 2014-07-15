@@ -1,10 +1,8 @@
-Convert hex to bin in Guile Scheme
-
 <p>Unfortunatly, Guile doesn't provide a method to convert hex to bin (When I'm writing, the current version is 2.0.11).
 People have to write their own one.</p>
 <p>But fortunatly, writing code in Scheme is kind of enjoy. Every time I've done my program in Scheme, a new idea will strike my head to refactor it.
 Then you can't stop to continue to program.</p>
-<p>Well, sometimes, we just want a quick way to do what our job. But in Scheme, you may become a lib/framework writer unexpectedly. Maybe it's the
+<p>Well, sometimes, we just want a quick way to do our job. But in Scheme, you may become a lib/framework writer unexpectedly. Maybe it's the
 worst point of Scheme. And one may enjoy wasting such time...hey I'm sorry Boss...</p>
 
 <p>Here's my version, you may take it for free, or donate some fixes/suggestions/comments. ;-)</p>
