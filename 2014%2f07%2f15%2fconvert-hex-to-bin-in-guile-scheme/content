@@ -15,6 +15,7 @@ worst point of Scheme. And one may enjoy wasting such time...hey I'm sorry Boss.
     (cond
      ((= i len) (final (reverse! ret)))
      (else (lp (+ i 2) (cons (string->number (substring str i (+ i 2)) base) ret))))))
+;; NOTE: substring in Guile happens to be copy-on-write, so it would be efficient
 
 (define (hex->bin str)
   (%numstr->bin str u8-list->bytevector 16))
