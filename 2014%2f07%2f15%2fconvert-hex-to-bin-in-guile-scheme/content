@@ -7,7 +7,7 @@ Then you can't stop to continue to program.</p>
 <p>Well, sometimes, we just want a quick way to do what our job. But in Scheme, you may become a lib/framework writer unexpectedly. Maybe it's the
 worst point of Scheme. And one may enjoy wasting such time...hey I'm sorry Boss...</p>
 
-<p>Here's my version, you may take it for free, or donate some fixes/suggestions/comments. ;-)
+<p>Here's my version, you may take it for free, or donate some fixes/suggestions/comments. ;-)</p>
 <pre class="sh_guile">
 (use-modules (rnrs)) ; we need bytevectors in rnrs module
 
