@@ -1,0 +1,6 @@
+<a href="http://web-artanis.com">Artanis</a> is a new web application framework (WAF) written with pure GNU Guile Scheme. Artanis is free software, under GPLv3 and LGPLv3.
+Artanis contains common HTTP stuffs (cookies,authentication,cache,sessions...), URL-remapping, HTML templating, and various experimental methods to handle Database: SSQL(SQL in s-expr), FPRM (Functional Programming Relational Mapping, and SQL-mapping. Now it supports mysql/postgresql/sqlite3 as DBD.
+
+The current performance of server in Artanis is weak. It is planed to implement an async green-thread server with Guile's brand new <a href="https://en.wikipedia.org/wiki/Delimited_continuation">delimited-continuations</a> in next big version (0.2).
+
+Artanis was announced as <a href="http://lispinsummerprojects.org/awesome-projects">certificated awesome project in 2013 Lisp in summer projects contest</a>. It's an official project of <a href="http://szdiy.org/">SZDIY community</a> for building the server side of web-service and mobile-app of the community.
