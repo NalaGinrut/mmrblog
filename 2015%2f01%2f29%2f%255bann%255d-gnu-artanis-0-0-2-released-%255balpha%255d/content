@@ -1,6 +1,6 @@
 <p>I'm pleased to announce artanis-0.0.2 here.</p>
 
-<p>GNU Artanis is a web application framework(WAF) written in Guile
+<p><a href="http://web-artanis.com">GNU Artanis</a> is a web application framework(WAF) written in Guile
 Scheme. It is designed to support the development of dynamic websites, 
 web applications, web services and web resources. 
 Artanis provides several tools for web development: database access,
