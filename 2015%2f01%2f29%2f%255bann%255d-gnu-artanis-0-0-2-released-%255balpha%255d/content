@@ -7,6 +7,7 @@ Artanis provides several tools for web development: database access,
 templating frameworks, session management, URL-remapping for RESTful,
 page caching, and so on.</p>
 
+<p>GNU Artanis is under GPLv3+ & LGPLv3+ (dual licenses).</p>
 <p>GNU Artanis is also the official project of <a href="http://szdiy.org">SZDIY community</a>.
 It's used to build server side of SZDIY common service.
 It is offered to GNU project to make free software better.</p>
