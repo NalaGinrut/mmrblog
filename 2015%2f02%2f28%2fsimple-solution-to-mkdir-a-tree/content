@@ -1,0 +1,109 @@
+<h3>The problem</h3>
+<p>Yesterday night I've written command line interface (CLI) for <a href="http://www.web-artanis.com">GNU Artanis</a>,
+after took care of my daughter to sleep, I had only one hour to hack something.</p>
+
+<p>My aim is to add `art create proj-name' command to create a bunch of files/directories for initiliazing a new Artanis web app.
+Just like Rails does. Well, since my turing brain has limited time for this hack, I have to choose my favorite way to traverse the tree for this job, the recursive way. ;-)</p>
+
+<h3>Depth first traversal</h3>
+<p>One of the proper way to mkdir a directory tree is to use <a href="http://en.wikipedia.org/wiki/Depth-first_search">DFS</a>. I chose the pre-order DFS.</p>
+<p>If you have well structured Tree implementation like <a href="https://github.com/NalaGinrut/nashkel/blob/master/nashkel/meta-tree.scm">this</a>,
+then the pseudo code below could be simple enough to try.</p>
+<pre class="sh_guile">
+;; This is pseudo code
+(define (preorder node visit)
+  (cond
+   ((leaf? node) #t)
+   (else
+    (visit node)
+    (for-each preorder (children node)))))
+</pre>
+<p>Actually, the same algorithm is used in my unfinished data-taistructure lib <a href="https://github.com/NalaGinrut/nashkel/blob/master/nashkel/meta-tree.scm#L207">Nashkel</a>.
+Could be optimized to iterative one though...</p>
+
+<h3>Tree structure</h3>
+<p>Here's a problem: I don't known if I'll add/remove directories in the future, so I need a flexible design to let me do this job easily. A proper tree design is a good start.</p>
+
+<p>For example:</p>
+<pre class="sh_sh">
+|-- app
+|   |-- controller
+|   |-- module
+|   `-- view
+|-- lib
+|-- log
+|-- prv
+|-- pub
+|   |-- css
+|   |-- img
+|   |   `-- upload
+|   `-- js
+|-- sys
+|   |-- i18n
+|   `-- pages
+|-- test
+|   |-- benchmark
+|   |-- functional
+|   `-- unit
+`-- tmp
+    `-- cache
+</pre>
+
+<p>In Scheme, the most convinient data structure is the list:</p>
+
+<pre class="sh_guile">
+(define *dir-arch*
+  '((app (module controller view)) ; MVC stuff
+    (sys (pages i18n)) ; system stuff
+    (log) ; log files
+    (lib) ; libs
+    (pub ((img (upload)) css js)) ; public assets
+    (prv) ; private stuff, say, something dedicated config or tokens
+    (tmp (cache)) ; temporary files
+    (test (unit functional benchmark)))) ; tests stuffs
+</pre>
+
+<p>Let me explain this tree structure built with list, since the algorithm implementation has something to do with
+the data structure design. I gave the rule below:</p>
+
+<pre class="sh_guile">
+((node1 (child1_1 child1_2 ...))
+ (node2 ((node3 (child3_1 child3_2 ...)) child2_1 child2_2 (node4 (child4_1 child4_2 ...)) ...))
+ (node5) ; no any children
+ ...)
+</pre>
+
+<p>The disadvantage of this tree is hard to modify dynamically (alright, you may use set-car! & set-cdr!). But it's easy to handle
+statically, because the hierarchy is clear.</p>
+
+<h3>Design the high-order-function</h3>
+<p>Now that I'm using Scheme, I'll choose FP way containly. High order function just like design pattern of FP.
+Design a good and generic one will save your lot time in the future development.</p>
+<p>Here is mine:</p>
+<pre class="sh_guile">
+(define (dfs tree visit level)
+  (match tree
+    (() #t)
+    (((r (children ...)) rest ...)
+     (visit r level)
+     (for-each (lambda (x) (dfs (list x) visit (cons r level))) children)
+     (dfs rest visit level))
+    (((r) rest ...)
+     (visit r level)
+     (dfs rest visit level))
+    ((children ...)
+     (visit (car children) level)
+     (dfs (cdr children) visit level))))
+</pre>
+
+<p>So it's easy to mkdir a directory tree now:</p>
+<pre class="sh_guile">
+(define (create-framework)
+  (define (->path x l)
+    (format #f "~{~a~^/~}" (reverse (cons x l))))
+  (dfs *dir-arch* (lambda (x l) (mkdir (->path x l))) '()))
+</pre>
+
+<p>This CLI feature won't appear in 0.0.3, and because it'll bring great change to GNU Artanis,
+maybe it should be in 0.1.0. Dunno...</p>
+<p>Happy hacking!</p>
