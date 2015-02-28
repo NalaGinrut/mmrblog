@@ -1,0 +1,16 @@
+timestamp: 1425150568
+author: Nala Ginrut
+author_email: nalaginrut@gmail.com
+author_url: 
+
+<span id='atname'>@Raymond</span> Your suggestions are two:
+
+1) get rid of the `final' argument of %numstr->bin.
+(%numstr->bin str final base) isn't any shorter or faster than (final (%numstr->bin str base)); in the latter case it's easier to understand what's happening and there aren't as many positional parameters to remember.
+
+@Raymond Yes, you're right. I agree a callback in final position could be optimized out and put it outside.
+
+2) rename %numstr->bin to %numstr->u8-list.
+If you eliminate the `final' parameter as suggested, then %numstr->bin always returns the same type, and you can use a more descriptive name.
+
+@Raymond Yes, it's a related optimize. ;-)
