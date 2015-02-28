@@ -1,0 +1,7 @@
+timestamp: 1425151667
+author: Nala Ginrut
+author_email: nalaginrut@gmail.com
+author_url: 
+
+1. get rid of `final'
+Answer: Yes, you're right. I agree a callback in final position could be optimized out and put it outside.
