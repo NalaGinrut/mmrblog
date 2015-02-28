@@ -25,7 +25,7 @@ Could be optimized to iterative one though...</p>
 <p>Here's a problem: I don't known if I'll add/remove directories in the future, so I need a flexible design to let me do this job easily. A proper tree design is a good start.</p>
 
 <p>For example:</p>
-<pre class="sh_sh">
+<pre>
 |-- app
 |   |-- controller
 |   |-- module
