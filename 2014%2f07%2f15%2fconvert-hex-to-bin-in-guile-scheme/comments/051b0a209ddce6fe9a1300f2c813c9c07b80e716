@@ -1,0 +1,14 @@
+timestamp: 1425146681
+author: Raymond
+author_email: Raymond@spambog.com
+author_url: 
+
+<p>Nice.</p>
+
+<p>I would like to make two suggestions for improvements:</p>
+
+<p>1) get rid of the `final' argument of %numstr-&gt;bin.</p>
+<p>(%numstr-&gt;bin str final base) isn't any shorter or faster than (final (%numstr-&gt;bin str base)); in the latter case it's easier to understand what's happening and there aren't as many positional parameters to remember.</p>
+
+<p>2) rename %numstr-&gt;bin to %numstr-&gt;u8-list.</p>
+<p>If you eliminate the `final' parameter as suggested, then %numstr-&gt;bin always returns the same type, and you can use a more descriptive name.</p>
