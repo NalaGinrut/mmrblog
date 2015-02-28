@@ -39,7 +39,7 @@ worst point of Scheme. And one may enjoy wasting such time...hey I'm sorry Boss.
 <p>In the beginning, I just need <font color='blue'>hex->bin</font>, but finally, I wrote a high order function for a tiny hex lib.</p>
 
 <p><font color='red'>Response to comments:</font></p>
-<p>Suggestions from <font color='blue'>Raymond</font>:</p>
+<p>Suggestions from <font color='blue'>@Raymond</font>:</p>
 <p>1) get rid of the `final' argument of %numstr-&gt;bin.</p><p>
 (%numstr-&gt;bin str final base) isn't any shorter or faster than (final (%numstr-&gt;bin str base)); in the latter case it's easier to understand what's happening and there aren't as many positional parameters to remember.</p>
 
