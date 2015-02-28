@@ -2,7 +2,7 @@
 <p>Yesterday night I've written command line interface (CLI) for <a href="http://www.web-artanis.com">GNU Artanis</a>,
 after took care of my daughter to sleep, I had only one hour to hack something.</p>
 
-<p>My aim is to add `art create proj-name' command to create a bunch of files/directories for initializing a new Artanis web app.
+<p>My aim is to add <font color='red'>art create proj-name</font> command to create a bunch of files/directories for initializing a new Artanis web app.
 Just like Rails does. Well, since my Turing brain has limited time for this hack, I have to choose my favorite way to traverse the tree for this job, the recursive way. ;-)</p>
 
 <h3>Depth first traversal</h3>
