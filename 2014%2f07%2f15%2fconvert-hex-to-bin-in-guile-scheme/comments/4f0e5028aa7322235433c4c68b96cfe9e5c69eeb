@@ -1,0 +1,12 @@
+timestamp: 1425151409
+author: Nala Ginrut
+author_email: nalaginrut@gmail.com
+author_url: 
+
+<span id='atname'>@Raymond</span> Your suggestions are two:
+
+1. get rid of `final'
+Answer: Yes, you're right. I agree a callback in final position could be optimized out and put it outside.
+
+2. rename %numstr->bin to %numstr->u8-list.
+Answer: Yes, it's a related optimize. ;-)
