@@ -2,8 +2,8 @@
 <p>Yesterday night I've written command line interface (CLI) for <a href="http://www.web-artanis.com">GNU Artanis</a>,
 after took care of my daughter to sleep, I had only one hour to hack something.</p>
 
-<p>My aim is to add `art create proj-name' command to create a bunch of files/directories for initiliazing a new Artanis web app.
-Just like Rails does. Well, since my turing brain has limited time for this hack, I have to choose my favorite way to traverse the tree for this job, the recursive way. ;-)</p>
+<p>My aim is to add `art create proj-name' command to create a bunch of files/directories for initializing a new Artanis web app.
+Just like Rails does. Well, since my Turing brain has limited time for this hack, I have to choose my favorite way to traverse the tree for this job, the recursive way. ;-)</p>
 
 <h3>Depth first traversal</h3>
 <p>One of the proper way to mkdir a directory tree is to use <a href="http://en.wikipedia.org/wiki/Depth-first_search">DFS</a>. I chose the pre-order DFS.</p>
@@ -49,7 +49,7 @@ Could be optimized to iterative one though...</p>
     `-- cache
 </pre>
 
-<p>In Scheme, the most convinient data structure is the list:</p>
+<p>In Scheme, the most convenient data structure is the list:</p>
 
 <pre class="sh_guile">
 (define *dir-arch*
@@ -73,7 +73,7 @@ the data structure design. I gave the rule below:</p>
  ...)
 </pre>
 
-<p>The disadvantage of this tree is hard to modify dynamically (alright, you may use set-car! & set-cdr!). But it's easy to handle
+<p>The disadvantage of this tree is hard to modify dynamically (alright, you may use set-car! and set-cdr!). But it's easy to handle
 statically, because the hierarchy is clear.</p>
 
 <h3>Design the high-order-function</h3>
