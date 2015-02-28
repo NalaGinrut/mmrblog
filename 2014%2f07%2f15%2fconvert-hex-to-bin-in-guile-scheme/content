@@ -37,3 +37,15 @@ worst point of Scheme. And one may enjoy wasting such time...hey I'm sorry Boss.
 </pre>
 
 <p>In the beginning, I just need <font color='blue'>hex->bin</font>, but finally, I wrote a high order function for a tiny hex lib.</p>
+
+<p><font color='red'>Response to comments:</font></p>
+<p>Suggestions from <font color='blue'>Raymond</font>:</p>
+<p>1) get rid of the `final' argument of %numstr-&gt;bin.</p><p>
+(%numstr-&gt;bin str final base) isn't any shorter or faster than (final (%numstr-&gt;bin str base)); in the latter case it's easier to understand what's happening and there aren't as many positional parameters to remember.</p>
+
+<p><font color='red'>Answer:</font>Yes, you're right. I agree a callback in final position could be optimized out and put it outside.</p>
+
+<p>2) rename %numstr->bin to %numstr-&gt;u8-list.</p>
+If you eliminate the `final' parameter as suggested, then %numstr-&gt;bin always returns the same type, and you can use a more descriptive name.</p>
+
+<p><font color='red'>Answer:</font>Yes, it's a related optimize. ;-)</p>
