@@ -1,6 +1,0 @@
-timestamp: 1425150967
-author: Nala Ginrut
-author_email: nalaginrut@gmail.com
-author_url: 
-
-1) get rid of the `final' argument of %numstr->bin.
