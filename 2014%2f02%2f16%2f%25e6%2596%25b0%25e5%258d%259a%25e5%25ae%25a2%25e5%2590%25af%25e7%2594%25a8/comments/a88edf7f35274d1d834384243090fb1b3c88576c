@@ -1,0 +1,7 @@
+timestamp: 1425151003
+author: Nala Ginrut
+author_email: nalaginrut@gmail.com
+author_url: 
+
+1. get rid of the `final' argument of %numstr->bin.
+(%numstr->bin str final base) isn't any shorter or faster than (final (%numstr->bin str base)); in the latter case it's easier to understand what's happening and there aren't as many positional parameters to remember.
