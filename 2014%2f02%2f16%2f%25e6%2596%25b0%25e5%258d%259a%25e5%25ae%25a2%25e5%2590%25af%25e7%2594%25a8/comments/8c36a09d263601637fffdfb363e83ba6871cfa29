@@ -1,0 +1,6 @@
+timestamp: 1425150874
+author: Nala Ginrut
+author_email: nalaginrut@gmail.com
+author_url: 
+
+(%numstr->bin str final base) isn't any shorter or faster than (final (%numstr->bin str base)); in the latter case it's easier to understand what's happening and there aren't as many positional parameters to remember.
