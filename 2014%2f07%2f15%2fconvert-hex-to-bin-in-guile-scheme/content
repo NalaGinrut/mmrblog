@@ -46,6 +46,6 @@ worst point of Scheme. And one may enjoy wasting such time...hey I'm sorry Boss.
 <p><font color='red'>Answer:</font>Yes, you're right. I agree a callback in final position could be optimized out and put it outside.</p>
 
 <p>2) rename %numstr->bin to %numstr-&gt;u8-list.</p>
-If you eliminate the `final' parameter as suggested, then %numstr-&gt;bin always returns the same type, and you can use a more descriptive name.</p>
+<p>If you eliminate the `final' parameter as suggested, then %numstr-&gt;bin always returns the same type, and you can use a more descriptive name.</p>
 
 <p><font color='red'>Answer:</font>Yes, it's a related optimize. ;-)</p>
