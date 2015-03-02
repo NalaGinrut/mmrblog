@@ -1,0 +1,68 @@
+<p>I'm pleased to announce artanis-0.0.3 here.</p>
+
+<p><a href="http://web-artanis.com">GNU Artanis</a> is a web application framework(WAF) written in Guile
+Scheme. It is designed to support the development of dynamic websites, 
+web applications, web services and web resources. 
+Artanis provides several tools for web development: database access,
+templating frameworks, session management, URL-remapping for RESTful,
+page caching, and so on.</p>
+
+<p><font color='red'>GNU Artanis is under GPLv3+ &amp; LGPLv3+ (dual licenses).</font></p>
+<p>GNU Artanis is also the official project of <a href="http://szdiy.org">SZDIY community</a>.
+It's used to build server side of SZDIY common service.
+It is offered to GNU project to make free software better.</p>
+
+<p>Here are the compressed sources:</p>
+<pre>
+  http://alpha.gnu.org/gnu/artanis//artanis-0.0.3.tar.gz   (432KB)
+  http://alpha.gnu.org/gnu/artanis//artanis-0.0.3.tar.bz2   (352KB)
+</pre>
+
+<p>Here are the GPG detached signatures[*]:</p>
+<pre>
+  http://alpha.gnu.org/gnu/artanis//artanis-0.0.3.tar.gz.sig
+  http://alpha.gnu.org/gnu/artanis//artanis-0.0.3.tar.bz2.sig
+</pre>
+
+<p>Use a mirror for higher download bandwidth:</p>
+<pre>
+  http://www.gnu.org/order/ftp.html
+</pre>
+
+<p>Here are the MD5 and SHA1 checksums:</p>
+<pre>
+751adf2bee25fd780041142ee4f714f6  artanis-0.0.3.tar.gz
+d4aa8076c5af142785037546a378cc61  artanis-0.0.3.tar.bz2
+b33cd373f6d969db7e25ce38b4567ea6fb85adc6  artanis-0.0.3.tar.gz
+acc5d2fa70f620639aeae9b965cc167562601c3a  artanis-0.0.3.tar.bz2
+</pre>
+
+<p>[*] Use a .sig file to verify that the corresponding file (without the
+.sig suffix) is intact.  First, be sure to download both the .sig file
+and the corresponding tarball.  Then, run a command like this:</p>
+<pre>
+  gpg --verify artanis-0.0.3.tar.gz.sig
+</pre>
+
+<p>If that command fails because you don't have the required public key,
+then run this command to import it:</p>
+
+<pre>
+  gpg --keyserver keys.gnupg.net --recv-keys EE78E925
+</pre>
+
+<p>and rerun the 'gpg --verify' command.</p>
+
+<p>This release was bootstrapped with the following tools:</p>
+<pre>
+  Autoconf 2.69.120-5dcda-dirty
+  Guile 2.1.0.2306-22c9e
+</pre>
+
+<h2>NEWS</h2>
+<pre>
+Changes in 0.0.3
+* Notable changes
+  Fixed several bugs.
+  Support JSONP.
+</pre>
