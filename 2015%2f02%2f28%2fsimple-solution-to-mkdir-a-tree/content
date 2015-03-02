@@ -28,7 +28,7 @@ Could be optimized to iterative one though...</p>
 <pre>
 |-- app
 |   |-- controller
-|   |-- module
+|   |-- model
 |   `-- view
 |-- lib
 |-- log
@@ -53,7 +53,7 @@ Could be optimized to iterative one though...</p>
 
 <pre class="sh_guile">
 (define *dir-arch*
-  '((app (module controller view)) ; MVC stuff
+  '((app (model controller view)) ; MVC stuff
     (sys (pages i18n)) ; system stuff
     (log) ; log files
     (lib) ; libs
