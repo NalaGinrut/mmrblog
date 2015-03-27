@@ -137,8 +137,8 @@ malloc_something_func(ptr);
 
 <h3>Practical example</h3>
 <p>Here's an workable example using FFI:</p>
-<pre>
-https://github.com/NalaGinrut/guile-pcre-ffi/blob/master/nala/pcre.scm
+<pre class="sh_sh">
+git clone https://github.com/NalaGinrut/guile-pcre-ffi.git
 </pre>
 <p>And you may try tokenizer of MAL:</p>
 <pre class="sh_guile">
