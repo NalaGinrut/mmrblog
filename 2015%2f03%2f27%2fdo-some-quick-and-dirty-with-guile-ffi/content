@@ -1,0 +1,159 @@
+<p>These days I'm facinated in working on <a href="https://github.com/kanaka/mal">MAL (stands for Make a Lisp) project with Guile</a>. I've done several steps so far, and I'll send pull request when it's all finished. And I found my Guile-2.1 implementation runs faster than most of others, only little slower than C version. Seems there's something to be expected. ;-)</p>
+
+<p>Today I don't want to talk about this project. I want to discuss FFI in Guile. The reason why I jump to play FFI is because the spec of MAL uses PCRE for its tokenizer hint. Personally, I don't think it's good idea. Because in this case, PCRE regex hides all the lexer details for compiler writers. But if it's for beginning compiler hackers, this would reduce their pain on lexer. </p>
+
+<p>Let me get into the topic in short, Guile has no good enough PCRE implementation so far. Oh, yes, there is my favorite irregex, very cool stuff, and supports most of PCRE features. Well, but I don't want to send my pull request including this lib, since it's too big. I would like to try a tiny &amp; elegant solution. Then I saw FFI.</p>
+
+<p>This case uses libpcre, if you need libpcre2, hmm...at least you have this article, right?</p>
+
+<h3>Prelude</h3>
+<p>There're something we need to put in front of code:</p>
+<pre class="sh_guile">
+(use-modules (rnrs)            ; for bytevectors
+             (system foreign)) ; for FFI
+
+;; Get dynamic link from .so file, note you don't have to write .so explicitly.
+(define pcre-ffi (dynamic-link "libpcre"))
+</pre>
+
+<h3>Bind functions</h3>
+<p>Now pick existed functions in the .so lib you want to bind to Guile.</p>
+<pre class="sh_guile">
+(define %pcre-compile2
+  (pointer->procedure '*                                       ; specify return type, here, it's a pointer
+                       (dynamic-func "pcre_compile2" pcre-ffi) ; get function pointer you want
+                       (list '* int '* '* '* '*))              ; declare arguments' types according to function signature
+...
+</pre>
+<p>Note, no matter what kind of C pointer you faced, <font color='red'>'*</font> is the only way to go.</p>
+<p><font color='blue'>pointer->procedure</font> is used to convert C function pointer to a Guile callable procedure.</p>
+
+<h3>Helper functions</h3>
+<p>These helper functions would be useful as you will learn later.</p>
+<pre class="sh_guile">
+(define (make-blob-pointer len)
+  (bytevector->pointer (make-bytevector len)))
+
+(define* (make-c-type-wrapper v l h type set ref #:optional (endian 'little))
+  (define size (sizeof type))
+  (define _obj (make-bytevector size 0))
+  (or (and (> v l) (&lt; v h)) (error "value is overflow!" v))
+  (if (> size 8) (set _obj 0 v endian) (set _obj 0 v)) 
+  (lambda (cmd . arg)
+    (case cmd
+      ((ref) (if (> size 8) (ref _obj 0 endian) (ref _obj 0)))
+      ((set)
+       (or (and (> (car arg) l) (&lt; (car arg) h)) (error "value is overflow!" v))
+       (if (> size 8) (set _obj 0 (car arg) endian) (set _obj 0 (car arg)))) 
+      ((&amp;) (bytevector->pointer _obj))
+      (else (error "Invalid cmd, should be ref/set/&amp;" cmd)))))
+
+;; Assuming we're little endian in this case
+(define (make-C-uint8 x)
+  (make-c-type-wrapper x 0 256 uint8 bytevector-u8-set! bytevector-u8-ref))
+(define (make-C-sint8 x)
+  (make-c-type-wrapper x -128 127 sint8 bytevector-s8-set! bytevector-s8-ref))
+(define (make-C-uint16 x)
+  (make-c-type-wrapper x 0 65535 int16 bytevector-u16-set! bytevector-u16-ref))
+(define (make-C-sint16 x)
+  (make-c-type-wrapper x -32768 32767 sint16 bytevector-s16-set! bytevector-s16-ref))
+(define (make-C-uint32 x)
+  (make-c-type-wrapper x 0 4294967295 uint32 bytevector-u32-set! bytevector-u32-ref))
+(define (make-C-sint32 x)
+  (make-c-type-wrapper x -2147483648 2147483647 sint32 bytevector-s32-set! bytevector-s32-ref))
+...
+;; Try to finish the rest by yourself! Don't forget float!
+</pre>
+
+<h3>C pointer tricks</h3>
+<p>IMO, the only difficulty in FFI is how you handle various C pointers to meet the arguments. Other types, int, long...are trivial.There're at least 4 situations.</p>
+
+<h4>Regular C pointer point to nothing, any types except pointer type</h4>
+<pre class="sh_c"> 
+non_pointer_type *a;
+func(a);
+</pre>
+<p>This kind of pointer is usually used to return value if one doesn't want to use function returning mechanism.</p>
+<pre class="sh_guile">
+(let ((a %null-pointer)) ; In Guile, you have to point to NULL explicitly
+  (func a) ; now 'a' holds something returned from func for later using
+  ...)
+</pre>
+
+<h4>Regular C pointer point to certain variable, any types except pointer type</h4>
+<pre class="sh_c">
+non_pointer_type a = certain_obj;
+non_pointer_type *p = &amp;a;
+
+// Assuming we have this silly function in .so lib
+int func(int *x)
+{
+  *x = 10;
+  return 0;
+}
+</pre>
+<p>Usually, this kind of pointer makes side-effect for the pointed variable, maybe change the value of it.</p>
+<p><font color='red'>But we can't use scm->pointer directly!!!</font>, since the pointer returned by this procedure is the pointer in VM, not in C stack or heap! Obviously, we have to get help from bytevectors.</p>
+<p>But different types needs different bytevector handling, we'll discuss them seperatly.</p>
+<pre class="sh_guile">
+;; For integer, including int/short/long
+
+(let* ((a (make-C-uint8 5))
+       (p (a '&amp;)))
+  (func p)
+  (a 'ref))
+;; ==> 10 ; Yay!!!
+
+;; Please try other types by yourself
+</pre>
+
+<h4>Pointer to pointer pointing to nothing</h4>
+<p>This kind of pointer is usually used to hold the memory block allocated within the callee function. <a href="https://www.eskimo.com/~scs/cclass/int/sx8.html">Take a look this tutorial if you have any question</a>.</p>
+<pre class="sh_c">
+non_pointer_type **ptr;
+malloc_something_func(ptr);
+</pre>
+<p>For Guile, you have two choices for freeing the allocated block. One is to free it as C programer does; another is to register its finalizer, then all the jobs delievered to GC, say, it'll be freed automatically when there's no reference to it.</p>
+<p>The second point need to be noted is that you have to allocate a proper bytevector to hold the pointer of pointer. We need to allocate memory blocks manually. Because C will allocate memeory in stack automatically, but Guile wouldn't do it for C code since Guile doesn't know C grammar for that job. One of possible design is to embed a C parser for doing that. But it's out of our topic.</p>
+<p>The last point is to remember to use <font color='red'>dereference-pointer</font>.</p>
+<pre class="sh_guile">
+(define manual-free
+  (pointer->procedure void (dynamic-func "xxx_free" xxx-ffi) (list '*))
+
+;; NOTE: finalizer has to be a C function pointer rather than a Guile procedure!
+(define auto-free (dynamic-func "xxx_free" xxx-ffi))
+
+(let ((pp (make-blob-pointer (sizeof ptrdiff_t)))) ; allocate memory to store a pointer
+  (malloc_something_func pp)
+  ;; set finalizer, GC will free it automatically, as a Lisper
+  (set-pointer-finalizer! (dereference-pointer pp) auto-free)
+  ... ; doing your job
+  (manual-free (dereference-pointer pp))) ; or you may free as a C programer
+</pre>
+<p>You don't have to take care of pp, since it's allocated by GC. What you should take care is (dereference-pointer pp) which points to a block allocated in malloc_something_func.</p>
+
+<h4>Three and higher level pointers</h4>
+<p>No!!! Don't ask me about it....</p>
+
+<h3>Practical example</h3>
+<p>Here's an workable example using FFI:</p>
+<pre>
+https://github.com/NalaGinrut/guile-pcre-ffi/blob/master/nala/pcre.scm
+</pre>
+<p>And you may try tokenizer of MAL:</p>
+<pre class="sh_guile">
+(use-modules (nala pcre))
+
+(define *token-re*
+  (new-pcre "[\\s,]*(~@|[\\[\\]{}()'`~^@]|\"(?:\\\\.|[^\\\\\"])*\"|;[^\n]*|[^\\s\\[\\]{}('\"`,;)]*)"))
+
+(define (tokenizer str)
+  (filter (lambda (s) (and (not (string-null? s)) (not (string=? (substring s 0 1) ";"))))
+          (pcre-search *token-re* str)))
+
+(tokenizer "nil true ,false")
+;; ==> ("nil" "true" "false")
+</pre>
+
+<h3>Caveats</h3>
+<p>There're at least two problems if you want to use pure FFI. One is reentry issue. If something C stuff can't promise you reentry, you may have to write some C wrapper for that. The second is that FFI can't handle pointers elegantly although it looks like elegant. Actually, you have to endure many segmentfalt before you get them work. And it's hard to debug when you use pure FFI. The same situation would be easier in C code. Even my guile-pcre-ffi works fine, there's fatal bug causes segmentfault while you try to free pcre object, no matter explicitly or inexplicitly. Unfortunately, I haven't find the reason. As I said, it seems not so nice to debug...</p>
