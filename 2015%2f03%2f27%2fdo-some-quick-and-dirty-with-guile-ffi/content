@@ -38,13 +38,13 @@
   (define size (sizeof type))
   (define _obj (make-bytevector size 0))
   (or (and (> v l) (&lt; v h)) (error "value is overflow!" v))
-  (if (> size 8) (set _obj 0 v endian) (set _obj 0 v)) 
+  (if (> size 1) (set _obj 0 v endian) (set _obj 0 v)) 
   (lambda (cmd . arg)
     (case cmd
-      ((ref) (if (> size 8) (ref _obj 0 endian) (ref _obj 0)))
+      ((ref) (if (> size 1) (ref _obj 0 endian) (ref _obj 0)))
       ((set)
        (or (and (> (car arg) l) (&lt; (car arg) h)) (error "value is overflow!" v))
-       (if (> size 8) (set _obj 0 (car arg) endian) (set _obj 0 (car arg)))) 
+       (if (> size 1) (set _obj 0 (car arg) endian) (set _obj 0 (car arg)))) 
       ((&amp;) (bytevector->pointer _obj))
       (else (error "Invalid cmd, should be ref/set/&amp;" cmd)))))
 
