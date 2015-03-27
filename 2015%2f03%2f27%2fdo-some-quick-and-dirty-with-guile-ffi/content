@@ -68,7 +68,7 @@
 <h3>C pointer tricks</h3>
 <p>IMO, the only difficulty in FFI is how you handle various C pointers to meet the arguments. Other types, int, long...are trivial.There're at least 4 situations.</p>
 
-<h4>Regular C pointer point to nothing, any types except pointer type</h4>
+<b>Regular C pointer point to nothing, any types except pointer type</b>
 <pre class="sh_c"> 
 non_pointer_type *a;
 func(a);
@@ -80,7 +80,7 @@ func(a);
   ...)
 </pre>
 
-<h4>Regular C pointer point to certain variable, any types except pointer type</h4>
+<b>Regular C pointer point to certain variable, any types except pointer type</b>
 <pre class="sh_c">
 non_pointer_type a = certain_obj;
 non_pointer_type *p = &amp;a;
@@ -107,7 +107,7 @@ int func(int *x)
 ;; Please try other types by yourself
 </pre>
 
-<h4>Pointer to pointer pointing to nothing</h4>
+<b>Pointer to pointer pointing to nothing</b>
 <p>This kind of pointer is usually used to hold the memory block allocated within the callee function. <a href="https://www.eskimo.com/~scs/cclass/int/sx8.html">Take a look this tutorial if you have any question</a>.</p>
 <pre class="sh_c">
 non_pointer_type **ptr;
@@ -132,7 +132,7 @@ malloc_something_func(ptr);
 </pre>
 <p>You don't have to take care of pp, since it's allocated by GC. What you should take care is (dereference-pointer pp) which points to a block allocated in malloc_something_func.</p>
 
-<h4>Three and higher level pointers</h4>
+<b>Three and higher level pointers</b>
 <p>No!!! Don't ask me about it....</p>
 
 <h3>Practical example</h3>
