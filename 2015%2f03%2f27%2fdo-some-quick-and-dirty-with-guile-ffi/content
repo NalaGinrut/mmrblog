@@ -156,4 +156,7 @@ https://github.com/NalaGinrut/guile-pcre-ffi/blob/master/nala/pcre.scm
 </pre>
 
 <h3>Caveats</h3>
-<p>There're at least two problems if you want to use pure FFI. One is reentry issue. If something C stuff can't promise you reentry, you may have to write some C wrapper for that. The second is that FFI can't handle pointers elegantly although it looks like elegant. Actually, you have to endure many segmentfalt before you get them work. And it's hard to debug when you use pure FFI. The same situation would be easier in C code. Even my guile-pcre-ffi works fine, there's fatal bug causes segmentfault while you try to free pcre object, no matter explicitly or inexplicitly. Unfortunately, I haven't find the reason. As I said, it seems not so nice to debug...</p>
+<p>There're at least two problems if you want to use pure FFI.</p>
+<p>One is reentry issue. If something C stuff can't promise you reentry, you may have to write some C wrapper for that.</p>
+<p>The second is that FFI can't handle pointers elegantly although it looks like elegant. Actually, you have to endure many segmentfalt before you get them work. And it's hard to debug when you use pure FFI. The same situation would be easier in C code.</p>
+<p>Even my guile-pcre-ffi works fine, there's fatal bug causes segmentfault while you try to free pcre object, no matter explicitly or inexplicitly. Unfortunately, I haven't find the reason. As I said, it seems not so nice to debug...</p>

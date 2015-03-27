@@ -1,5 +1,5 @@
 timestamp: 1427490577
-tags: guile,scheme,ffi,c,pointer,bytevector,pcre,compiler,mal
+tags: guile, scheme, ffi, c, pointer, bytevector, pcre, compiler, mal
 status: publish
 title: Do some quick and dirty with Guile FFI
 name: do-some-quick-and-dirty-with-guile-ffi
