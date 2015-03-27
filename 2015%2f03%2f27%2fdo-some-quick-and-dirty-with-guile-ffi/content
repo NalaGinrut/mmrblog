@@ -94,7 +94,7 @@ int func(int *x)
 </pre>
 <p>Usually, this kind of pointer makes side-effect for the pointed variable, maybe change the value of it.</p>
 <p><font color='red'>But we can't use scm->pointer directly!!!</font>, since the pointer returned by this procedure is the pointer in VM, not in C stack or heap! Obviously, we have to get help from bytevectors.</p>
-<p>But different types needs different bytevector handling, we'll discuss them seperatly.</p>
+
 <pre class="sh_guile">
 ;; For integer, including int/short/long
 
