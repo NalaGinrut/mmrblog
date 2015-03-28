@@ -33,7 +33,7 @@ split them like this:</p>
 <pre class="sh_python">
 num = get_number()
 hit = num_filter(num)
-result = word_picker(n)
+result = word_picker(hit)
 result_show(result)
 </pre>
 <p>This could be clearer, and it's easy to add a 'add_one' step after 'get_number', which plus 1 to
