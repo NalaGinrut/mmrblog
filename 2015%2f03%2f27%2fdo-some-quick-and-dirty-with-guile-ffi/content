@@ -7,7 +7,7 @@
 <p>This case uses libpcre, if you need libpcre2, hmm...at least you have this article, right?</p>
 
 <h3>Prelude</h3>
-<p>There're something we need to put in front of code:</p>
+<p>There's something we need to put in front of code:</p>
 <pre class="sh_guile">
 (use-modules (rnrs)            ; for bytevectors
              (system foreign)) ; for FFI
