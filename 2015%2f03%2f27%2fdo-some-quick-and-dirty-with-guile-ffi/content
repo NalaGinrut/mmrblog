@@ -50,7 +50,7 @@
 
 ;; Assuming we're little endian in this case
 (define (make-C-uint8 x)
-  (make-c-type-wrapper x 0 256 uint8 bytevector-u8-set! bytevector-u8-ref))
+  (make-c-type-wrapper x 0 255 uint8 bytevector-u8-set! bytevector-u8-ref))
 (define (make-C-sint8 x)
   (make-c-type-wrapper x -128 127 sint8 bytevector-s8-set! bytevector-s8-ref))
 (define (make-C-uint16 x)
