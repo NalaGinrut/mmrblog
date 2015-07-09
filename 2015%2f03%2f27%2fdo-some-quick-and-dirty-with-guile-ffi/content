@@ -1,6 +1,6 @@
 <p>These days I'm facinated in working on <a href="https://github.com/kanaka/mal">MAL (stands for Make a Lisp) project with Guile</a>. I've done several steps so far, and I'll send pull request when it's all finished. And I found my implementation in Guile-2.1 runs faster than most of others, only little slower than C version. Seems there's something to be expected. ;-)</p>
 
-<p>Today I don't want to talk about this project. I want to discuss FFI in Guile. The reason why I jump to play FFI is because the spec of MAL uses PCRE for its tokenizer hint. Personally, I don't think it's good idea. Because in this case, PCRE regex hides all the lexer details for compiler writers. But if it's for beginning compiler hackers, this would reduce their pain on lexer. </p>
+<p>Today I don't want to talk about this project. I want to discuss FFI in Guile. The reason why I jump to play FFI is because the spec of MAL uses PCRE for its tokenizer hint. Personally, I don't think it's good idea. Because in this case, PCRE regex hides all the lexer details for compiler writers. But if it's for beginner compiler hackers, this would reduce their pain on lexer. </p>
 
 <p>Let me get into the topic in short, Guile has no good enough PCRE implementation so far. Oh, yes, there is my favorite irregex, very cool stuff, and supports most of PCRE features. Well, but I don't want to send my pull request including this lib, since it's too big. I would like to try a tiny &amp; elegant solution. Then I saw FFI.</p>
 
