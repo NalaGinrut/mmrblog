@@ -310,37 +310,3 @@ it makes the code clearer and elegant. Or you may imagine how to rewrite them in
 </p>
 <p>[2] Why has the actor model not succeeded? Paul.Mackay http://www.doc.ic.ac.uk/~nd/surprise_97/journal/vol2/pjm2/
 </p>
-
-<pre class="sh_guile">
-(define (ping . args)
-  (match args
-    ((0 pong-pid)
-     (! pong-pid 'finished)
-     (format #t "ping finished~%"))
-    ((n pong-pid)
-     (! pong-pid (list 'ping (self)))
-     (receive
-      ('pong #t
-       (format #t "ping received pong~%")))
-     (ping (1- n) pong-pid))))
-
-(define (pong)
-  (receive
-   ('finished #t
-    (format #t "pong finished~%"))
-   (('ping ping-pid)
-    (format #t "pong received ping~%")
-    (! ping-pid 'pong)
-    (pong))))
-
-(define (start)
-  (let ((pong-pid (spawn pong '())))
-    (spawn ping (list 3 pong-pid))
-    (active-scheduler)))
-</pre>
-
-<p>Well, looks similar huh? Anyway, I just intended to write so, maybe helpful for you to learn Actors in Guile compared to Erlang code.
-</p>
-<p>Before we try the code above to work,  we have to implment the Actors framework first. We need to implement message passing, mailbox check, process spawn,
-and scheduler. Let me show the code directly:
-</p>
