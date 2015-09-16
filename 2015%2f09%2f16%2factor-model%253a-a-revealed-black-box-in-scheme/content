@@ -5,8 +5,8 @@
   ...etc. It is believed that these concurrent models could bring high performance and scalable concurrent network service.
   Actor-model(I may call it Actors in the rest of the article) is a hot one that many folks would like to talk about it. But rather than using it, have you
   imagined to implement one for better learning it?
-  Well, if your answer is "yes" then this is the article for you. I'll show you a feature-limited tiny actor-model implementation in Scheme, although you may call
-  it a "poor man's threading system", hope that's enough for you to understand the principle.
+  Well, if your answer is <b>yes</b> then this is the article for you. I'll show you a feature-limited tiny actor-model implementation in Scheme, although you may call
+  it a <b>poor man's threading system</b>, hope that's enough for you to understand the principle.
 </p>
 
 <p>BTW. folks may kindly mention <a href="http://lfe.io/">LFE(stands for Lisp Flavored Erlang)</a> which is a Lisp syntax frontend implemented on Erlang compiler.
@@ -84,10 +84,11 @@ to pick your fav Scheme implementation for Actors if you get the principle in th
 <p>Alright, you can leave now.
 </p>
 
-<br><br><br>
+<br/><br/><br/>
 
 <p>Oh you don't buy it, right?
 </p>
+
 <p>Continuations is good for implementing lightweight threads/coroutines. Unlike fork/pthread, such threads won't
   trap into OS kernel, hence this so-called green-thread would reduce much overhead, and lockfree (actually, just less locks).
   In brief, it's faster.
@@ -117,6 +118,7 @@ to pick your fav Scheme implementation for Actors if you get the principle in th
 <p>And how about delimited continuations?
 </p>
 
+
 <div align="center">
   <img src="/blog/img/delimcont.svg"/>
 </div>
@@ -133,6 +135,8 @@ to pick your fav Scheme implementation for Actors if you get the principle in th
 <p>I'm not going to discuss how to handle delimited-continuations in detail here, because it could be a very large topic. One may play delimited-continuations in many fancy ways.
   Here I just give an simplest example to show the principle of a coroutine.
 </p>
+
+
 
 <pre class="sh_guile">
 (use-modules (ice-9 control)) ; import delimited-continuations module
@@ -158,7 +162,7 @@ to pick your fav Scheme implementation for Actors if you get the principle in th
 ;; ==> start
 
 workqueue
-;; ==> (#<partial-continuation 28baba0>) ; or something similar
+;; ==> (#&lt;partial-continuation 28baba0>) ; or something similar
 
 ((car workqueue)) ; run this thread
 ;; ==> 123
@@ -210,40 +214,6 @@ start() -&gt;
 </pre>
 
 <p>But if you transfer Erlang code to S-expr:
-</p>
-
-<pre class="sh_guile">
-(define (ping . args)
-  (match args
-    ((0 pong-pid)
-     (! pong-pid 'finished)
-     (format #t "ping finished~%"))
-    ((n pong-pid)
-     (! pong-pid (list 'ping (self)))
-     (receive
-      ('pong #t
-       (format #t "ping received pong~%")))
-     (ping (1- n) pong-pid))))
-
-(define (pong)
-  (receive
-   ('finished #t
-    (format #t "pong finished~%"))
-   (('ping ping-pid)
-    (format #t "pong received ping~%")
-    (! ping-pid 'pong)
-    (pong))))
-
-(define (start)
-  (let ((pong-pid (spawn pong '())))
-    (spawn ping (list 3 pong-pid))
-    (active-scheduler)))
-</pre>
-
-<p>Well, looks similar huh? Anyway, I just intended to write so, maybe helpful for you to learn Actors in Guile compared to Erlang code.
-</p>
-<p>Before we try the code above to work,  we have to implment the Actors framework first. We need to implement message passing, mailbox check, process spawn,
-and scheduler. Let me show the code directly:
 </p>
 
 <pre class="sh_guile">
@@ -341,3 +311,36 @@ it makes the code clearer and elegant. Or you may imagine how to rewrite them in
 <p>[2] Why has the actor model not succeeded? Paul.Mackay http://www.doc.ic.ac.uk/~nd/surprise_97/journal/vol2/pjm2/
 </p>
 
+<pre class="sh_guile">
+(define (ping . args)
+  (match args
+    ((0 pong-pid)
+     (! pong-pid 'finished)
+     (format #t "ping finished~%"))
+    ((n pong-pid)
+     (! pong-pid (list 'ping (self)))
+     (receive
+      ('pong #t
+       (format #t "ping received pong~%")))
+     (ping (1- n) pong-pid))))
+
+(define (pong)
+  (receive
+   ('finished #t
+    (format #t "pong finished~%"))
+   (('ping ping-pid)
+    (format #t "pong received ping~%")
+    (! ping-pid 'pong)
+    (pong))))
+
+(define (start)
+  (let ((pong-pid (spawn pong '())))
+    (spawn ping (list 3 pong-pid))
+    (active-scheduler)))
+</pre>
+
+<p>Well, looks similar huh? Anyway, I just intended to write so, maybe helpful for you to learn Actors in Guile compared to Erlang code.
+</p>
+<p>Before we try the code above to work,  we have to implment the Actors framework first. We need to implement message passing, mailbox check, process spawn,
+and scheduler. Let me show the code directly:
+</p>
