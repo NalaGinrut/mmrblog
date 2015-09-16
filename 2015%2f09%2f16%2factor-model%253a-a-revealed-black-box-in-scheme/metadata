@@ -1,4 +1,4 @@
-timestamp: 1442396736
+timestamp: 1442396852
 tags: scheme, erlang, actors, concurrent, csp, pi-caculus, continuations, delimited-continuations, 
 status: draft
 title: Actor-Model: a revealed black box in Scheme
