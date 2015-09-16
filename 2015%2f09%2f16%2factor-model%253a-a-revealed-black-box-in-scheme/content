@@ -61,7 +61,7 @@ to pick your fav Scheme implementation for Actors if you get the principle in th
 <p>The Actors, from programming perspective, at least consist of these priciples:
 </p>
 
-<pre>
+<pre class="sh_sh">
   1. Light-weight processes (actors) are the units for scheduling, it is unnessary to be the OS-level process; 
   2. Actors must communicate only by means of message(immutable) passing;
   3. Each actor has its own mailbox, and can be accessed only by its owner. This means the states of actors are local;
