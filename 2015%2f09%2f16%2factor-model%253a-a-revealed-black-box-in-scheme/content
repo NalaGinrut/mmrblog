@@ -46,7 +46,7 @@ to pick your fav Scheme implementation for Actors if you get the principle in th
   The actor model has no direct notion of inheritance or hierarchy, which means it is time consuming and confusing to program actors with trends of common behaviour.
   Besides, a *real* Actors framework demands scalability, which means it should support exchanging states and continuations between distributed nodes. It is a hard problem
   for efficient implementing. Moreover, it is not easy to do static-analysis debuggning and optimizing...etc for such a model.[2]
-  These prolems seem to have preventing Actors to be a mainstream computing model for a long time.
+  These prolems seem to have been preventing Actors to be a mainstream computing model for a long time.
   For me, I would like to use it only in a high concurrent and scalable server design. It's great for server developping, but maybe not so generic for common usage just like
   what Object-Oriented Model does.
 </p>
