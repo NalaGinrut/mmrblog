@@ -64,7 +64,7 @@ to pick your fav Scheme implementation for Actors if you get the principle in th
 <pre>
   1. Light-weight processes (actors) are the units for scheduling, it is unnessary to be the OS-level process; 
   2. Actors must communicate only by means of message(immutable) passing;
-  3. Each actor has its own mailbox, and can be accessed only by its owner. This means the states of actors are local;
+  3. Each actor has its own mailbox, and can be accessed only by its owner. This means the states are local;
   4. A proper pattern matching machanism for parsing the messages;
   5. Actors may block themselves, but no actor should block the thread on which it is running;
   6. Actors may spawn new actors;
