@@ -68,7 +68,7 @@ to pick your fav Scheme implementation for Actors if you get the principle in th
   4. A proper pattern matching machanism for parsing the messages;
   5. Actors may block themselves, but no actor should block the thread on which it is running;
   6. Actors may spawn new actors;
-  7. Sharing states and processes with distributed nodes.
+  7. Sharing states and processes by distributed nodes.
 </pre>
 
 <p>Then we may write a prove-of-concept one by following them. Some features maybe considered to be very hard, but they're somehow implemented in certain modern languages, say, Erlang.
