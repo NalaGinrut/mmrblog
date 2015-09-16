@@ -302,7 +302,7 @@ it makes the code clearer and elegant. Or you may imagine how to rewrite them in
 <h3>Caveats</h3>
 
 <p>I'm sorry but I didn't implement <font color="blue">serializable-continuations</font> which is used to
-  <font color="red">Sharing states and processes with distributed nodes</font>. It's another big topic to make it properly. I may discuss it in the future.
+  <font color="red">Sharing states and processes by distributed nodes</font>. It's another big topic to make it properly. I may discuss it in the future.
 </p>
 
 <h3>Refs:</h3>
