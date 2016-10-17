@@ -69,7 +69,7 @@ lua@(guile-user)>
     generation has been done. What we have to do is to parse Lua code to AST, and convert the AST to tree-il (the first layer of Guile intermediate
     representation) without losing any information especially the environment. In addition, we have to handle primitives for Lua, most
     of them are written in Scheme, and we have to find a proper way to call them from Lua acrossing the modules calling. When most of the work is done,
-    we have to write many libs compatible origin Lua as possible to make this language implementation usable.
+    we have to write many libs being compatible with origin Lua as possible to make this language implementation usable.
     Finally, we have to find a good way to let modules written in Scheme and Lua could be called by each other. Then you may take advantage of
     the contributions to Guile community.
 </p>
@@ -80,7 +80,7 @@ lua@(guile-user)>
 
 <p>
     Guile-lua-rebirth has a well tested lexer (tokenizer), and LALR(1) parser for complete Lua-5.2 grammar, a new designed Abstract
-    Syntax Tree (AST) layer for pre-optimizing, arithmetic operations with polymorphic parameters (you may plus a number to a string),
+    Syntax Tree (AST) layer for pre-optimizing, arithmetic operations with Ad-hoc polymorphism (you may plus a number to a string, overloading, if you're familiar with such a term),
     Lua tables, proper tail call...
 </p>
 
