@@ -10,7 +10,7 @@
 </p>
 
 <p> But now, I would like to introduce our Lua frontend on GNU Guile, it's not ready for real work, but most of the work is done.
-    There was a bit old, half baked Lua frontend in Guile branch, but seems unmaintain for a long time. I've rewritten one from sratch.
+    There was a bit old, half baked Lua frontend in Guile branch, but seems unmaintain for a long time. I've rewritten one from scratch.
     Please don't ask me why bother to reinvent wheel. The new one exists now, so let's talk about it.
     I would like to avoid redundant work in other projects, but not in this one.
 </p>
