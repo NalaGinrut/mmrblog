@@ -137,13 +137,13 @@ print(a.b.c.bar())
     When you define a function in a table, there're two methods to reference the value with a key in the table.
     The <font color="red">colon reference</font>, and the <font color="red">point reference</font>. The only difference is that colon-ref
     will pass the current table object as a hidden argument into the function, and bound to the variable named <font color="red">self</font>.
-    Just like <font color="blue">this</font> object in Javascript or C++, although they're not the same, but similar. For point-ref, the self
+    Just like <font color="blue">this</font> object in Javascript or C++, although they're not the same, they're similar. For point-ref, the self
     is unbound to any value, so it's nil in default according to Lua spec.
 </p>
 
 <p>
     The interesting point is that you have to use colon-ref if you want to get meaningful `self' value. Otherwise, you will get nil, even if you've
-    defined the function with colon. We name this issue as ISSUE-1 for our later context.
+    defined the function with colon. (We name this issue as ISSUE-1 for our later context.)
 </p>
 
 <p> It is rediculous. </p>
@@ -189,7 +189,7 @@ print(a.b.c.foo())
 <h2> Added `continue' statement </h2>
 
 <p>
-    Many people thought Lua is just like C, since most of the syntax looks like C. Well, it is not true. At least, you can't use `continue'.
+    Many people thought Lua is just similar to C, since most of the syntax looks like C. Well, it is not true. At least, you can't use `continue'.
     You may read <a href="http://stackoverflow.com/questions/3524970/why-does-lua-have-no-continue-statement" >the discussion on StackOverflow</a>.
     And the explain from the Lua author:
 </p>
