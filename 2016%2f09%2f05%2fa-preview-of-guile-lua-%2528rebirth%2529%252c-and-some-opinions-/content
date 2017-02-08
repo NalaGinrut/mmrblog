@@ -79,7 +79,7 @@ lua@(guile-user)>
 
 <p>
     Guile-lua-rebirth has a well tested lexer (tokenizer), and LALR(1) parser for complete Lua-5.2 grammar, a new designed Abstract
-    Syntax Tree (AST) layer for pre-optimizing, arithmetic operations with Ad-hoc polymorphism (you may plus a number to a string, overloading, if you're familiar with such a term),
+    Syntax Tree (AST) layer for pre-optimizing, arithmetic operations with paramatric polymorphism (you may plus a number to a string, overloading, if you're familiar with such a term),
     Lua tables, proper tail call...
 </p>
 
